@@ -30,7 +30,7 @@
 ## Notes
 
 - The lab's official full name is settled and needs no confirmation:
-  **Language Intelligence and Machine Intelligence Lab**.
+  **Language Understanding and Machine Intelligence Lab**.
 - Nothing on the site states an unverified fact. Every optional link, button
   and section is hidden until its content exists, so shipping before the items
   above are resolved is safe — the page simply does not mention them.

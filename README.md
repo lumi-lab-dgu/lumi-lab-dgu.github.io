@@ -1,6 +1,6 @@
 # LUMI Lab website
 
-Official website of **LUMI Lab — Language Intelligence and Machine Intelligence
+Official website of **LUMI Lab — Language Understanding and Machine Intelligence
 Lab**, Department of Computer Science and Artificial Intelligence, Dongguk
 University.
 

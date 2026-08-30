@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Official website of LUMI Lab (Language Intelligence and Machine Intelligence Lab) at Dongguk University.",
+  "description": "Official website of LUMI Lab (Language Understanding and Machine Intelligence Lab) at Dongguk University.",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",

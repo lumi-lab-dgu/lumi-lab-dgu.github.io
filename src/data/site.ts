@@ -11,9 +11,9 @@ export const site = {
   /** Wordmark on its own, without the word "Lab". */
   labShortName: 'LUMI',
   /** Official full name. Do not paraphrase or re-expand the acronym. */
-  labFullName: 'Language Intelligence and Machine Intelligence Lab',
+  labFullName: 'Language Understanding and Machine Intelligence Lab',
   /** The acronym expansion, used as a subtitle. */
-  labExpansion: 'Language Intelligence and Machine Intelligence',
+  labExpansion: 'Language Understanding and Machine Intelligence',
 
   institution: 'Dongguk University',
   department: 'Department of Computer Science and Artificial Intelligence',
@@ -34,13 +34,13 @@ export const site = {
 
   /** Screen-reader label for the logo link. */
   srLabel:
-    'LUMI Lab — Language Intelligence and Machine Intelligence Lab at Dongguk University',
+    'LUMI Lab — Language Understanding and Machine Intelligence Lab at Dongguk University',
 
   defaultTitle:
-    'LUMI Lab | Language Intelligence and Machine Intelligence at Dongguk University',
+    'LUMI Lab | Language Understanding and Machine Intelligence at Dongguk University',
   titleTemplate: '%s | LUMI Lab',
   defaultDescription:
-    'LUMI Lab—Language Intelligence and Machine Intelligence—at Dongguk University studies trustworthy language and multimodal models, reliable AI agents, evaluation, instruction following, and feedback.',
+    'LUMI Lab—Language Understanding and Machine Intelligence—at Dongguk University studies trustworthy language and multimodal models, reliable AI agents, evaluation, instruction following, and feedback.',
 
   /** Path (relative to /public) of the Open Graph image. */
   ogImage: '/og/lumi-og.png',

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="LUMI Lab — Language Intelligence and Machine Intelligence, Dongguk University">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="LUMI Lab — Language Understanding and Machine Intelligence, Dongguk University">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#17213A"/>
@@ -40,7 +40,7 @@
     <text x="80" y="16" font-family="Manrope, Inter, Segoe UI, sans-serif" font-size="132" font-weight="800" letter-spacing="2" fill="#F2F3F7">LUMI</text>
   </g>
 
-  <text x="96" y="300" font-family="Inter, Segoe UI, sans-serif" font-size="34" font-weight="500" fill="#B9C0D4">Language Intelligence and Machine Intelligence</text>
+  <text x="96" y="300" font-family="Inter, Segoe UI, sans-serif" font-size="34" font-weight="500" fill="#B9C0D4">Language Understanding and Machine Intelligence</text>
 
   <rect x="96" y="344" width="86" height="3" fill="#E5A93A"/>
 
