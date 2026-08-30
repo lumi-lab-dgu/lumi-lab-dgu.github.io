@@ -95,8 +95,8 @@ export const ui = {
     },
     cta: {
       eyebrow: 'Join LUMI',
-      title: 'We are building a new research group.',
-      body: 'We welcome students and collaborators who want to study trustworthy AI through careful experiments, strong evaluations, and questions that matter beyond benchmark scores.',
+      title: 'Come work on these questions with us.',
+      body: 'We welcome students and collaborators who want to study trustworthy AI through careful experiments and evaluations they can stand behind.',
       primary: 'Research opportunities',
       secondary: 'Contact us',
     },
@@ -135,6 +135,8 @@ export const ui = {
       publicationsHeading: 'Publications',
       publicationsNote:
         'Work produced after the launch of LUMI Lab will be marked separately as LUMI Lab research.',
+      publicationsShow: 'Show publications',
+      publicationsHide: 'Hide publications',
       growingTitle: 'We are growing',
       growingBody:
         'New members will be added here as LUMI grows. We welcome inquiries from prospective graduate students and undergraduate research interns who are excited about trustworthy AI and careful empirical research.',
@@ -287,8 +289,8 @@ export const ui = {
     },
     cta: {
       eyebrow: '연구실 지원',
-      title: '이제 막 시작하는 연구실입니다.',
-      body: '벤치마크 점수만으로는 답할 수 없는 질문이 있습니다. 꼼꼼한 실험과 제대로 된 평가로 그 질문을 함께 파고들 학생과 공동 연구자의 연락을 환영합니다!',
+      title: '이 질문들을 함께 파고들 분을 찾습니다.',
+      body: '꼼꼼한 실험과 스스로 납득할 수 있는 평가로 신뢰할 수 있는 AI를 연구하고 싶은 학생과 공동 연구자의 연락을 환영합니다!',
       primary: '지원 안내 보기',
       secondary: '연락하기',
     },
@@ -326,6 +328,8 @@ export const ui = {
       labMembers: '연구실 구성원',
       publicationsHeading: 'Publications',
       publicationsNote: 'LUMI Lab 설립 이후의 연구는 LUMI Lab 연구로 따로 표시됩니다.',
+      publicationsShow: '논문 보기',
+      publicationsHide: '접기',
       growingTitle: '함께할 분을 찾고 있습니다',
       growingBody:
         '신뢰할 수 있는 AI와 꼼꼼한 실증 연구에 관심 있는 대학원 진학 희망자와 학부 연구인턴의 문의를 환영합니다!',
