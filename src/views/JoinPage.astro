@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import { ui, type Locale } from '../data/i18n';
-import { links } from '../data/site';
+import { links, site } from '../data/site';
 
 interface Props {
   lang: Locale;
@@ -21,9 +21,13 @@ const t = ui[lang];
         <h1 class="page-intro__title">{t.join.title}</h1>
         <p class="lead page-intro__lead">{t.join.intro}</p>
         <p class="page-intro__action">
-          <a class="btn btn--primary" href={links.emailInquiry}>
+          <a
+            class="btn btn--primary"
+            href={links.emailInquiry}
+            aria-label={`${t.common.emailAria}: ${site.email}`}
+          >
             <Icon name="mail" size={16} />
-            {t.common.emailPi}
+            {site.email}
           </a>
         </p>
       </div>
@@ -54,7 +58,11 @@ const t = ui[lang];
   <section class="section">
     <div class="container">
       <div class="first-email">
-        <SectionHeading eyebrow={t.join.emailEyebrow} title={t.join.emailTitle} />
+        <SectionHeading
+          eyebrow={t.join.emailEyebrow}
+          title={t.join.emailTitle}
+          description={t.join.emailIntro}
+        />
         <ul class="checklist">
           {t.join.checklist.map((item) => <li class="checklist__item">{item}</li>)}
         </ul>
@@ -64,9 +72,13 @@ const t = ui[lang];
           <p class="subject-line__value"><code>{t.join.subjectValue}</code></p>
         </div>
         <p class="first-email__action">
-          <a class="btn btn--primary" href={links.emailInquiry}>
+          <a
+            class="btn btn--primary"
+            href={links.emailInquiry}
+            aria-label={`${t.common.emailAria}: ${site.email}`}
+          >
             <Icon name="mail" size={16} />
-            {t.common.emailPi}
+            {site.email}
           </a>
         </p>
         <p class="disclaimer">{t.join.disclaimer}</p>
@@ -188,6 +200,9 @@ const t = ui[lang];
 
   .first-email__note {
     margin-top: var(--space-md);
+    /* Narrower than the prose column: at 15px the full width runs to ~96
+       characters a line, which is past comfortable reading. */
+    max-width: 64ch;
     font-size: var(--text-sm);
     color: var(--color-muted);
     word-break: keep-all;

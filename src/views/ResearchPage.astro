@@ -144,8 +144,13 @@ const statusLabel = (status: string) =>
           {t.research.researchOpportunities}
           <Icon name="arrow-right" size={16} />
         </a>
-        <a class="btn btn--secondary" href={links.email}>
-          {lang === 'ko' ? t.common.emailPi : `Email Prof. ${site.piName}`}
+        <a
+          class="btn btn--secondary"
+          href={links.email}
+          aria-label={`${t.common.emailAria}: ${site.email}`}
+        >
+          <Icon name="mail" size={16} />
+          {site.email}
         </a>
       </div>
     </div>
