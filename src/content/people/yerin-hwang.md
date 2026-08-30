@@ -20,8 +20,8 @@ bioShortKo: >-
   전공으로 박사학위를, 전기정보공학부에서 학사학위를 받았습니다. 대규모 언어모델과
   LLM 에이전트, 평가, 신뢰할 수 있는 AI, 멀티모달 시스템, 한국어 NLP에 관심이 있습니다.
 bioLongKo: >-
-  동국대학교에 오기 전에는 SNU MILAB과 LG AI Research, Max Planck Institute for Security and
-  Privacy에서 연구했습니다.
+  동국대학교에 오기 전에는 SNU MILAB과 LG AI Research, 그리고 독일 Max Planck Institute for
+  Security and Privacy에서 연구했습니다.
 interests:
   - Natural Language Processing
   - Large Language Models
@@ -43,4 +43,4 @@ visible: true
 ---
 
 Before joining Dongguk University, she conducted research at SNU MILAB, LG AI
-Research, and the Max Planck Institute for Security and Privacy.
+Research, and the Max Planck Institute for Security and Privacy in Germany.
