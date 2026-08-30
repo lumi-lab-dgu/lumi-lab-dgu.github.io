@@ -9,15 +9,15 @@ affiliationKo: 동국대학교 컴퓨터AI학부
 bioShort: >-
   Yerin Hwang studies how language and multimodal models become unreliable as
   evaluators, instruction followers, and agents, and how those failures can be
-  measured and reduced. She received her Ph.D. in the Interdisciplinary Program
-  in Artificial Intelligence and her B.S. in Electrical & Computer Engineering
-  from Seoul National University. Her research interests include large language
+  measured and reduced. She received her Ph.D. in Artificial Intelligence and
+  her B.S. in Electrical & Computer Engineering from Seoul National University.
+  Her research interests include large language
   models, LLM agents, evaluation, trustworthy AI, multimodal systems, and
   Korean NLP.
 bioShortKo: >-
   저는 언어·멀티모달 모델이 평가자나 지시 수행자, 에이전트로 동작할 때 어떤 식으로 신뢰를
-  잃는지, 그리고 그 실패를 어떻게 측정하고 줄일 수 있는지를 연구합니다. 서울대학교 협동과정
-  인공지능전공에서 박사학위를, 전기정보공학부에서 학사학위를 받았습니다. 대규모 언어모델과
+  잃는지, 그리고 그 실패를 어떻게 측정하고 줄일 수 있는지를 연구합니다. 서울대학교에서 인공지능
+  전공으로 박사학위를, 전기정보공학부에서 학사학위를 받았습니다. 대규모 언어모델과
   LLM 에이전트, 평가, 신뢰할 수 있는 AI, 멀티모달 시스템, 한국어 NLP에 관심이 있습니다.
 bioLongKo: >-
   동국대학교에 오기 전에는 SNU MILAB과 LG AI Research, Max Planck Institute for Security and
