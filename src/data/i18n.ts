@@ -237,14 +237,17 @@ export const ui = {
   },
 
   ko: {
+    // Navigation and action labels stay English in both versions: they are
+    // interface furniture, they are short, and Korean lab sites conventionally
+    // leave them in English. Only prose is translated.
     nav: {
-      home: '홈',
-      research: '연구',
-      people: '구성원',
-      publications: '논문',
-      join: '지원',
-      contact: '연락처',
-      news: '소식',
+      home: 'Home',
+      research: 'Research',
+      people: 'People',
+      publications: 'Publications',
+      join: 'Join',
+      contact: 'Contact',
+      news: 'News',
     },
     common: {
       skipToContent: '본문으로 건너뛰기',
@@ -252,21 +255,21 @@ export const ui = {
       ongoing: '진행 중',
       completed: '완료',
       paused: '중단',
-      learnMore: '자세히 보기',
+      learnMore: 'Learn more',
       emailAria: '황예린 교수에게 메일 보내기',
       mainNav: '주 메뉴',
       mobileNav: '주 메뉴 (모바일)',
       footerNav: '푸터 메뉴',
-      menu: '메뉴',
-      email: '이메일',
+      menu: 'Menu',
+      email: 'Email',
     },
     home: {
       metaDescription:
         'LUMI Lab은 동국대학교 컴퓨터AI학부 황예린 교수 연구실입니다. 자연어처리와 대규모 언어모델을 중심으로 LLM 평가, 에이전트 신뢰성, 멀티모달 평가, AI 안전성을 연구합니다.',
       heroLead:
         'LUMI Lab은 동국대학교 컴퓨터AI학부 황예린 교수 연구실입니다. 자연어처리와 대규모 언어모델(LLM)을 중심으로 신뢰할 수 있는 AI를 연구하며, LLM 평가와 에이전트 신뢰성, 멀티모달 평가, AI 안전성이 주요 주제입니다.',
-      exploreResearch: '연구 살펴보기',
-      joinLumi: '지원 안내',
+      exploreResearch: 'Explore our research',
+      joinLumi: 'Join LUMI',
       heroRecruiting:
         '연구실을 함께 만들어 갈 대학원생, 학부 연구인턴, 공동 연구자의 연락을 환영합니다!',
       missionTitle: 'AI가 어디서 무너지는지를 연구합니다',
@@ -276,7 +279,7 @@ export const ui = {
       projectsTitle: '지금 다루고 있는 문제',
       projectsIntro:
         '성능이 좋은 시스템도 실제 환경에서는 부족한 부분이 남습니다. 지금은 세 가지를 다루고 있습니다. 기능과 비용을 함께 따지는 판단, 지시가 충돌할 때 우선순위를 지키는 일, 그리고 어긋난 결과에서 회복하는 능력입니다.',
-      exploreAllResearch: '연구 전체 보기',
+      exploreAllResearch: 'Explore all research',
       areasEyebrow: '연구 분야',
       areasTitle: '평가부터 실제 동작까지',
       areasIntro:
@@ -284,17 +287,17 @@ export const ui = {
       pubsEyebrow: 'Publications',
       pubsTitle: '지도교수 주요 논문',
       pubsIntro: '현재 LUMI Lab에서 이어가고 있는 연구의 바탕이 된 논문들입니다.',
-      viewAllPublications: '논문 전체 보기',
+      viewAllPublications: 'View all publications',
       newsEyebrow: '소식',
       newsTitle: '연구실 소식',
-      allNews: '소식 전체 보기',
+      allNews: 'All news',
     },
     cta: {
       eyebrow: '연구실 지원',
       title: '이 질문들을 함께 파고들 분을 찾습니다.',
       body: '꼼꼼한 실험과 스스로 납득할 수 있는 평가로 신뢰할 수 있는 AI를 연구하고 싶은 학생과 공동 연구자의 연락을 환영합니다!',
-      primary: '지원 안내 보기',
-      secondary: '연락하기',
+      primary: 'Research opportunities',
+      secondary: 'Contact us',
     },
     research: {
       metaDescription:
@@ -310,7 +313,7 @@ export const ui = {
       ongoingEyebrow: '진행 중인 연구',
       ongoingTitle: '지금 진행 중인 연구',
       ongoingIntro: '현재 연구실의 실험은 대부분 아래 세 가지 주제를 중심으로 진행됩니다.',
-      projectPage: '프로젝트 페이지',
+      projectPage: 'Project page',
       methodologyEyebrow: '연구 방법',
       methodologyTitle: '연구하는 방식',
       methodologyBody:
@@ -319,7 +322,7 @@ export const ui = {
       collabTitle: '함께 연구하기',
       collabIntro:
         '평가, 에이전트 신뢰성, AI 안전성 분야의 학계·산업계 공동 연구를 환영합니다. 이 주제를 함께 연구하고 싶은 학생의 연락도 언제든 환영합니다!',
-      researchOpportunities: '지원 안내 보기',
+      researchOpportunities: 'Research opportunities',
     },
     people: {
       metaDescription:
@@ -330,12 +333,12 @@ export const ui = {
       labMembers: '연구실 구성원',
       publicationsHeading: 'Publications',
       publicationsNote: 'LUMI Lab 설립 이후의 연구는 LUMI Lab 연구로 따로 표시됩니다.',
-      publicationsShow: '논문 보기',
-      publicationsHide: '접기',
+      publicationsShow: 'Show publications',
+      publicationsHide: 'Hide publications',
       growingTitle: '함께할 분을 찾고 있습니다',
       growingBody:
         '신뢰할 수 있는 AI와 꼼꼼한 실증 연구에 관심 있는 대학원 진학 희망자와 학부 연구인턴의 문의를 환영합니다!',
-      joinLumi: '지원 안내 보기',
+      joinLumi: 'Join LUMI',
       portraitPending: '사진 준비 중',
       portraitOf: '사진:',
     },
@@ -422,7 +425,7 @@ export const ui = {
       metaDescription: '요청하신 페이지를 찾을 수 없습니다.',
       title: '이 페이지는 연구 경로에서 벗어났습니다.',
       body: '찾으시는 페이지가 없거나 위치가 바뀌었습니다.',
-      cta: 'LUMI 홈으로',
+      cta: 'Back to LUMI',
     },
   },
 } as const;
