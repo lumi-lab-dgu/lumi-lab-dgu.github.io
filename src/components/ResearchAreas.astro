@@ -12,8 +12,11 @@ const { lang, headingLevel: Heading = 'h3' } = Astro.props;
 
 <ul class="research-areas">
   {
-    researchAreas.map((area) => (
+    researchAreas.map((area, index) => (
       <li class="research-area" id={area.id}>
+        <p class="research-area__number" aria-hidden="true">
+          {String(index + 1).padStart(2, '0')}
+        </p>
         <Heading class="research-area__title">{area.title[lang]}</Heading>
         <p class="research-area__description">{area.description[lang]}</p>
         <ul class="tag-list research-area__keywords">
@@ -54,21 +57,17 @@ const { lang, headingLevel: Heading = 'h3' } = Astro.props;
     scroll-margin-top: calc(var(--header-height) + var(--space-lg));
   }
 
-  .research-area__title {
-    position: relative;
-    padding-left: 1rem;
+  /* A quiet index instead of an illustrative icon. */
+  .research-area__number {
+    font-family: var(--font-heading);
+    font-size: var(--text-xs);
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    color: var(--color-accent-deep);
   }
 
-  /* A small light point instead of an illustrative icon. */
-  .research-area__title::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.55em;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--color-accent);
+  .research-area__title {
+    margin-top: var(--space-2xs);
   }
 
   .research-area__description {

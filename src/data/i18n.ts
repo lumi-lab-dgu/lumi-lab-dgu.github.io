@@ -77,9 +77,9 @@ export const ui = {
       missionBody:
         'LUMI—Language Understanding and Machine Intelligence—is a research lab in the Department of Computer Science and Artificial Intelligence at Dongguk University, led by Prof. Yerin Hwang. Our work sits at the intersection of natural language processing, trustworthy AI, agentic systems, and multimodal evaluation. We investigate where advanced AI systems fail under realistic pressure and build benchmarks, analyses, and methods that help make their behavior more reliable.',
       projectsEyebrow: 'Ongoing Projects',
-      projectsTitle: 'Questions we are working on now',
+      projectsTitle: 'What we are working on',
       projectsIntro:
-        'Our current projects examine failures that emerge when AI systems must evaluate, choose, prioritize, or revise—not just generate an answer once.',
+        'Each of our current directions takes a way that capable systems still fall short in real use — recovering from a bad result, weighing cost against capability, and holding priorities under conflict.',
       exploreAllResearch: 'Explore all research',
       areasEyebrow: 'Research Areas',
       areasTitle: 'From evaluation to reliable action',
@@ -113,7 +113,7 @@ export const ui = {
         'Each area asks where a capability that looks solid in aggregate breaks down under a more demanding setting.',
       ongoingEyebrow: 'Ongoing Projects',
       ongoingTitle: 'What we are working on now',
-      ongoingIntro: 'Three projects currently drive most of the experimental work.',
+      ongoingIntro: 'Three directions currently drive most of the experimental work.',
       projectPage: 'Project page',
       methodologyEyebrow: 'Methodology',
       methodologyTitle: 'How we work',
@@ -267,14 +267,14 @@ export const ui = {
       exploreResearch: '연구 살펴보기',
       joinLumi: '지원 안내',
       heroRecruiting:
-        '연구실을 함께 만들어 갈 대학원생, 학부 연구인턴, 공동 연구자를 모집하고 있습니다.',
+        '연구실을 함께 만들어 갈 대학원생, 학부 연구인턴, 공동 연구자의 연락을 환영합니다!',
       missionTitle: 'AI가 어디서 무너지는지를 연구합니다',
       missionBody:
         'LUMI Lab(Language Understanding and Machine Intelligence)은 동국대학교 컴퓨터AI학부 황예린 교수 연구실입니다. 자연어처리, 신뢰할 수 있는 AI, LLM 에이전트, 멀티모달 평가를 아우르는 주제를 다룹니다. 성능이 좋아 보이는 모델이 실제 환경에서는 어디서부터 어긋나는지를 확인하고, 그 동작을 개선할 수 있는 benchmark와 분석 방법을 함께 만듭니다.',
       projectsEyebrow: '진행 중인 연구',
-      projectsTitle: '지금 다루고 있는 문제들',
+      projectsTitle: '지금 다루고 있는 문제',
       projectsIntro:
-        'AI 시스템이 한 번 답을 내놓는 것으로 끝나지 않고 스스로 평가하고, 선택하고, 우선순위를 정하고, 고쳐야 하는 상황에서 어떤 문제가 생기는지를 살펴봅니다.',
+        '성능이 좋은 시스템도 실제로 쓰이는 환경에서는 여전히 부족한 지점이 있습니다. 잘못된 결과에서 회복하기, 기능과 비용을 함께 저울질하기, 충돌 속에서 우선순위 지키기 — 지금은 이 세 가지를 다룹니다.',
       exploreAllResearch: '연구 전체 보기',
       areasEyebrow: '연구 분야',
       areasTitle: '평가부터 실제 동작까지',
@@ -291,7 +291,7 @@ export const ui = {
     cta: {
       eyebrow: '연구실 지원',
       title: '이제 막 시작하는 연구실입니다.',
-      body: '벤치마크 점수만으로는 답할 수 없는 질문을 꼼꼼한 실험과 제대로 된 평가로 파고들 학생, 그리고 공동 연구자를 기다립니다.',
+      body: '벤치마크 점수만으로는 답할 수 없는 질문을 꼼꼼한 실험과 제대로 된 평가로 파고들 학생과 공동 연구자의 연락을 환영합니다!',
       primary: '지원 안내 보기',
       secondary: '연락하기',
     },
@@ -308,7 +308,7 @@ export const ui = {
         '네 분야 모두, 평균 점수로는 멀쩡해 보이는 능력이 조건이 까다로워지면 어디서부터 무너지는지를 다룹니다.',
       ongoingEyebrow: '진행 중인 연구',
       ongoingTitle: '지금 진행 중인 연구',
-      ongoingIntro: '현재 연구실의 실험은 대부분 아래 세 프로젝트를 중심으로 진행됩니다.',
+      ongoingIntro: '현재 연구실의 실험은 대부분 아래 세 가지 주제를 중심으로 진행됩니다.',
       projectPage: '프로젝트 페이지',
       methodologyEyebrow: '연구 방법',
       methodologyTitle: '연구하는 방식',
@@ -317,7 +317,7 @@ export const ui = {
       collabEyebrow: '공동 연구',
       collabTitle: '함께 연구하기',
       collabIntro:
-        '평가, 에이전트 신뢰성, AI 안전성 분야의 학계·산업계 공동 연구를 환영합니다. 이 주제를 함께 연구하고 싶은 학생의 연락도 기다립니다.',
+        '평가, 에이전트 신뢰성, AI 안전성 분야의 학계·산업계 공동 연구를 환영합니다. 이 주제를 함께 연구하고 싶은 학생의 연락도 언제든 환영합니다!',
       researchOpportunities: '지원 안내 보기',
     },
     people: {

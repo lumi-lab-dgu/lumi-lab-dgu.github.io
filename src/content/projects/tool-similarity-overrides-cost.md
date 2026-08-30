@@ -1,9 +1,9 @@
 ---
-title: When Tool Similarity Overrides Cost
+title: Cost-Aware Tool Use in LLM Agents
 summary: >-
-  LLM agents may favor a tool whose name or description resembles the task even
-  when a functionally equivalent option is cheaper. We study when surface
-  similarity weakens cost-aware tool selection.
+  Agents that call external tools have to weigh what a task needs against what
+  each option costs. We study how dependable that trade-off is, and what pulls
+  it off course.
 status: ongoing
 tags:
   - LLM Agents
@@ -15,15 +15,14 @@ visible: true
 anchor: tool-cost
 ---
 
-We construct functionally identical "twin" tools while varying only their names,
-descriptions, and prices. Using controlled database tasks, we measure how
-lexical overlap, semantic similarity, relative cost gaps, and absolute price
-scale affect an agent's choice. The goal is to understand and reduce
-tool-selection shortcuts that can make deployed agents unnecessarily expensive
-or unreliable.
+As agents take on more work through external tools and APIs, choosing a tool
+stops being a purely functional decision. Several tools may accomplish the same
+thing at very different cost, and an agent running unattended makes that call
+many times over. Deployed systems are assumed to weigh capability against cost
+sensibly, and there is little systematic evidence that they do.
 
-This setting lets us isolate a simple but consequential question: when task
-wording resembles one tool description more closely than another, does that
-resemblance override an explicit economic signal? By controlling tool
-functionality while varying representation and cost, we can separate genuine
-task requirements from superficial selection biases.
+We study how reliably agents make that trade-off, and which properties of how a
+tool is presented pull the decision away from the sensible option. This is a
+failure mode that rarely shows up as a wrong answer — it shows up as a system
+that is quietly more expensive and less predictable than it should be, which is
+exactly the kind of problem that survives into production.

@@ -1,29 +1,28 @@
 ---
-title: Anatomy of Instruction-Hierarchy Collapse
+title: Instruction Hierarchy Under Accumulated Conflict
 summary: >-
-  As conflicting instructions accumulate, models can stop respecting source
-  priority. We probe where this collapse appears inside the model and when it
-  emerges across post-training stages.
+  Models are expected to honour which source of instruction outranks another.
+  We study how well that ordering survives once conflicting instructions start
+  to pile up.
 status: ongoing
 tags:
   - AI Safety
   - Instruction Following
-  - Mechanistic Analysis
+  - Model Behavior
 order: 3
 featured: true
 visible: true
 anchor: instruction-hierarchy
 ---
 
-This project asks whether multi-conflict instruction-hierarchy failures are
-perception failures or action failures: does the internal representation of
-which source should win collapse, or does the model retain that representation
-but fail to act on it? We use layer-wise probing, minimal-pair activation
-patching, and checkpoints across post-training stages to localize the failure
-and trace when the capability emerges or degrades.
+A deployed language model takes instructions from several places at once: a
+system prompt, a developer, a user, retrieved documents, the output of tools it
+called itself. Much of its safety rests on respecting the order of authority
+between those sources. A single clean conflict is the easy case, and models
+mostly handle it.
 
-Rather than introducing another behavioral benchmark, this project uses existing
-instruction-hierarchy evaluations as a measurement instrument for mechanistic
-analysis. By varying conflict load and examining internal representations,
-causal activation interventions, and different post-training stages, we aim to
-explain why instruction-priority behavior breaks under accumulated conflict.
+Real deployments are not the easy case. Instructions accumulate, contradict each
+other, and arrive from sources of very different trust. We study how instruction
+priority holds up under that pressure and why it gives way, because a system
+that follows the right source only when the situation is simple is not one that
+can be relied on where it matters.

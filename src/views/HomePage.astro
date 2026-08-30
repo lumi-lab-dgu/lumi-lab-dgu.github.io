@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import AcronymExpansion from '../components/AcronymExpansion.astro';
 import HeroVisual from '../components/HeroVisual.astro';
 import Icon from '../components/Icon.astro';
 import JoinCallout from '../components/JoinCallout.astro';
@@ -35,8 +36,9 @@ const researchHref = withBase(localeHref(lang, '/research/'));
     <div class="container container--wide hero__inner">
       <div class="hero__content">
         <p class="eyebrow">{site.labName} · {lang === 'ko' ? site.institutionKo : site.institution}</p>
-        {/* The lab name is the headline, and stays in English in both versions. */}
-        <h1 class="hero__title" lang="en">{site.labFullName}</h1>
+        {/* The name stays in English in both versions. */}
+        <h1 class="hero__title" lang="en">{site.labName}</h1>
+        <AcronymExpansion />
         <p class="lead hero__lead">{t.home.heroLead}</p>
         <div class="button-row hero__actions">
           <a class="btn btn--primary" href={researchHref}>
@@ -173,11 +175,14 @@ const researchHref = withBase(localeHref(lang, '/research/'));
   }
 
   .hero__title {
-    margin-top: var(--space-md);
-    font-size: clamp(1.875rem, 1.45rem + 1.7vw, 2.75rem);
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-    max-width: 28ch;
+    margin-top: var(--space-sm);
+    font-size: clamp(2.75rem, 1.9rem + 3.4vw, 4.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
+  .hero__content :global(.acronym) {
+    margin-top: var(--space-sm);
   }
 
   .hero__lead {
@@ -203,10 +208,6 @@ const researchHref = withBase(localeHref(lang, '/research/'));
   @media (max-width: 60rem) {
     .hero__inner {
       grid-template-columns: minmax(0, 1fr);
-    }
-
-    .hero__title {
-      max-width: 22ch;
     }
 
     .hero__visual {

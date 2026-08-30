@@ -1,0 +1,70 @@
+---
+import { site } from '../data/site';
+
+/**
+ * Renders "Language Understanding and Machine Intelligence" with the four
+ * letters that spell LUMI picked out, so the acronym explains itself.
+ *
+ * The letters are derived from the name rather than hardcoded, so correcting
+ * the expansion in site.ts cannot leave the highlighting pointing at the wrong
+ * words. Screen readers still read one continuous phrase.
+ */
+
+interface Props {
+  /** Rendered size. `lg` is the hero; `sm` suits denser placements. */
+  size?: 'lg' | 'sm';
+}
+
+const { size = 'lg' } = Astro.props;
+
+const acronym = site.labShortName;
+
+let next = 0;
+const words = site.labExpansion.split(' ').map((word) => {
+  if (next < acronym.length && word[0]?.toUpperCase() === acronym[next]) {
+    next += 1;
+    return { initial: word.slice(0, 1), rest: word.slice(1) };
+  }
+  return { initial: null, rest: word };
+});
+---
+
+<p class:list={['acronym', `acronym--${size}`]} lang="en">
+  {
+    words.map((word, index) => (
+      <>
+        {index > 0 && ' '}
+        {word.initial ? (
+          <>
+            <b class="acronym__initial">{word.initial}</b>
+            {word.rest}
+          </>
+        ) : (
+          word.rest
+        )}
+      </>
+    ))
+  }
+</p>
+
+<style>
+  .acronym {
+    font-family: var(--font-heading);
+    font-weight: 500;
+    color: var(--color-muted-strong);
+    letter-spacing: 0.005em;
+  }
+
+  .acronym--lg {
+    font-size: clamp(1.0625rem, 0.98rem + 0.4vw, 1.3125rem);
+  }
+
+  .acronym--sm {
+    font-size: var(--text-sm);
+  }
+
+  .acronym__initial {
+    font-weight: 800;
+    color: var(--color-primary-dark);
+  }
+</style>
