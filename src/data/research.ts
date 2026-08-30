@@ -25,7 +25,7 @@ export const researchAreas: readonly ResearchArea[] = [
     },
     description: {
       en: 'We study bias, robustness, uncertainty, and faithfulness when language and vision–language models are used as evaluators.',
-      ko: '언어모델과 시각-언어모델이 평가자로 쓰일 때 나타나는 편향, 강건성, 불확실성, 충실성을 연구합니다.',
+      ko: '언어모델과 vision–language 모델을 평가자로 쓸 때 나타나는 편향과 강건성, 불확실성, 충실성을 연구합니다.',
     },
     keywords: ['LLM-as-a-Judge', 'Evaluation', 'Robustness'],
   },
@@ -33,11 +33,11 @@ export const researchAreas: readonly ResearchArea[] = [
     id: 'reliable-agents',
     title: {
       en: 'Reliable Agents',
-      ko: '안정적인 에이전트',
+      ko: '에이전트 신뢰성',
     },
     description: {
       en: 'We examine instruction hierarchy, tool use, cost-aware decisions, and safety when agents face conflicting or misleading signals.',
-      ko: '에이전트가 서로 충돌하거나 오도하는 신호를 마주할 때의 지시 위계, 도구 사용, 비용을 고려한 판단, 안전성을 살펴봅니다.',
+      ko: '에이전트가 서로 충돌하거나 잘못된 신호를 받았을 때의 instruction hierarchy와 도구 사용, 비용을 고려한 판단, 안전성을 살펴봅니다.',
     },
     keywords: ['Agent Reliability', 'Tool Use', 'AI Safety'],
   },
@@ -49,7 +49,7 @@ export const researchAreas: readonly ResearchArea[] = [
     },
     description: {
       en: 'We evaluate whether models can diagnose failures, express actionable feedback, and carry out precise corrections without causing new errors.',
-      ko: '모델이 실패를 진단하고, 실행 가능한 피드백을 표현하고, 새로운 오류를 만들지 않으면서 정확히 수정할 수 있는지를 평가합니다.',
+      ko: '모델이 스스로 실패를 진단하고, 실행 가능한 피드백을 만들고, 새로운 오류 없이 정확히 고칠 수 있는지를 평가합니다.',
     },
     keywords: ['Multimodal AI', 'Feedback', 'Image Editing'],
   },
@@ -61,7 +61,7 @@ export const researchAreas: readonly ResearchArea[] = [
     },
     description: {
       en: 'We develop evaluation and training data, metrics, and analyses that reflect language-specific and real-world model behavior.',
-      ko: '언어의 특성과 실제 환경에서의 모델 동작을 반영하는 평가·학습 데이터, 지표, 분석을 개발합니다.',
+      ko: '언어마다 다른 특성과 실제 환경에서의 동작을 반영하는 평가·학습 데이터와 지표, 분석 방법을 만듭니다.',
     },
     keywords: ['Data Generation', 'Evaluation Data', 'Korean NLP'],
   },
@@ -74,24 +74,24 @@ export interface ResearchPrinciple {
 
 export const researchPrinciples: readonly ResearchPrinciple[] = [
   {
-    title: { en: 'Measure carefully', ko: '정확하게 측정한다' },
+    title: { en: 'Measure carefully', ko: '제대로 측정하기' },
     description: {
       en: 'Design evaluations that isolate the capability we actually want to understand.',
-      ko: '정말로 알고 싶은 능력만 분리해서 볼 수 있도록 평가를 설계합니다.',
+      ko: '정말 알고 싶은 능력만 따로 떼어 볼 수 있도록 평가를 설계합니다.',
     },
   },
   {
-    title: { en: 'Stress realistic systems', ko: '현실적인 조건에서 밀어붙인다' },
+    title: { en: 'Stress realistic systems', ko: '실제 조건에서 시험하기' },
     description: {
       en: 'Study behavior under conflict, feedback, imperfect outputs, and deployment constraints.',
-      ko: '충돌, 피드백, 불완전한 출력, 실제 배포 제약 아래에서의 동작을 살펴봅니다.',
+      ko: '지시 충돌과 피드백, 불완전한 출력, 배포 환경의 제약 속에서 모델이 어떻게 동작하는지 봅니다.',
     },
   },
   {
-    title: { en: 'Explain failures', ko: '실패를 설명한다' },
+    title: { en: 'Explain failures', ko: '실패의 원인 찾기' },
     description: {
       en: 'Move beyond aggregate scores to understand why a system behaves the way it does.',
-      ko: '종합 점수에 머무르지 않고, 시스템이 왜 그렇게 동작하는지까지 파고듭니다.',
+      ko: '종합 점수에 머무르지 않고, 왜 그렇게 동작하는지까지 파고듭니다.',
     },
   },
 ] as const;
