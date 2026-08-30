@@ -10,9 +10,17 @@ interface Props {
    * `compact` — a flat editorial list for the home page.
    */
   variant?: 'full' | 'compact';
+  /**
+   * Heading level for the year headings. Paper titles sit one level below, so
+   * the list nests correctly under whatever section contains it.
+   */
+  headingLevel?: 'h2' | 'h3';
 }
 
-const { publications, variant = 'full' } = Astro.props;
+const { publications, variant = 'full', headingLevel = 'h2' } = Astro.props;
+
+const YearHeading = headingLevel;
+const TitleHeading = headingLevel === 'h2' ? 'h3' : 'h4';
 
 const groups =
   variant === 'full'
@@ -42,9 +50,9 @@ function actionsFor(publication: PublicationEntry) {
     groups.map((group) => (
       <section class="publications__group">
         {variant === 'full' && (
-          <h2 class="publications__year" id={`year-${group.year}`}>
+          <YearHeading class="publications__year" id={`year-${group.year}`}>
             {group.year}
-          </h2>
+          </YearHeading>
         )}
 
         <ol class="publications__list">
@@ -52,7 +60,7 @@ function actionsFor(publication: PublicationEntry) {
             const actions = actionsFor(publication);
             return (
               <li class="publication">
-                <h3 class="publication__title">
+                <TitleHeading class="publication__title">
                   {publication.data.paperUrl ? (
                     <a class="publication__title-link" href={publication.data.paperUrl}>
                       {publication.data.title}
@@ -60,7 +68,7 @@ function actionsFor(publication: PublicationEntry) {
                   ) : (
                     publication.data.title
                   )}
-                </h3>
+                </TitleHeading>
 
                 <p class="publication__authors">
                   {publication.data.authors.map((author, index) => (

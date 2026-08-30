@@ -3,15 +3,17 @@ import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Icon from '../../components/Icon.astro';
 import PersonCard from '../../components/PersonCard.astro';
+import PublicationList from '../../components/PublicationList.astro';
 import type { SocialLink } from '../../components/SocialLinks.astro';
 import { site } from '../../data/site';
-import { getPeople } from '../../utils/content';
+import { getPeople, getPublications } from '../../utils/content';
 import { publicFileExists } from '../../utils/assets';
 import { withBase } from '../../utils/paths';
 
 const people = await getPeople();
 const lead = people.find((person) => person.data.lead);
 const members = people.filter((person) => !person.data.lead);
+const publications = await getPublications();
 
 /** Long-biography paragraphs come from the Markdown body of the person entry. */
 const LeadBio = lead ? (await render(lead)).Content : undefined;
@@ -24,24 +26,14 @@ const cvLinks: SocialLink[] = publicFileExists(site.cvPath)
 
 <BaseLayout
   title="People"
-  description={`People at LUMI Lab, ${site.institution}. Led by Prof. ${site.piName}, the lab is growing and welcomes prospective graduate students and undergraduate research interns.`}
+  description={`Prof. ${site.piName} leads LUMI Lab in the ${site.department} at ${site.institution}, researching trustworthy language models, LLM evaluation, reliable agents, and multimodal systems.`}
 >
-  <section class="section page-intro">
-    <div class="container">
-      <div class="page-intro__inner">
-        <p class="eyebrow">People</p>
-        <h1 class="page-intro__title">
-          A new lab, built around careful and collaborative research
-        </h1>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--tight section--surface">
+  <!-- PI profile. Its name is the page heading, so there is no separate title block. -->
+  <section class="section section--tight">
     <div class="container">
       {
         lead && (
-          <PersonCard person={lead} extraLinks={cvLinks}>
+          <PersonCard person={lead} extraLinks={cvLinks} headingLevel="h1">
             {LeadBio && (
               <div class="person__long-bio">
                 <LeadBio />
@@ -55,9 +47,9 @@ const cvLinks: SocialLink[] = publicFileExists(site.cvPath)
 
   {
     members.length > 0 && (
-      <section class="section">
+      <section class="section section--surface">
         <div class="container">
-          <h2 class="members__heading">Lab members</h2>
+          <h2 class="section-title">Lab members</h2>
           <ul class="members">
             {members.map((member) => (
               <li>
@@ -69,6 +61,21 @@ const cvLinks: SocialLink[] = publicFileExists(site.cvPath)
       </section>
     )
   }
+
+  <!-- Publications -->
+  <section class="section section--surface">
+    <div class="container">
+      <h2 class="section-title">Publications</h2>
+      <p class="section-note">
+        Work produced after the launch of LUMI Lab will be marked separately as LUMI Lab
+        research.
+      </p>
+      <div class="publications-wrapper">
+        <PublicationList publications={publications} variant="full" headingLevel="h3" />
+        <p class="footnote">* Equal contribution.</p>
+      </div>
+    </div>
+  </section>
 
   <section class="section section--tint">
     <div class="container">
@@ -91,24 +98,35 @@ const cvLinks: SocialLink[] = publicFileExists(site.cvPath)
 </BaseLayout>
 
 <style>
-  .page-intro__inner {
+  .section-title {
+    font-size: var(--text-h2);
+  }
+
+  .section-note {
+    margin-top: var(--space-xs);
     max-width: var(--width-prose);
-  }
-
-  .page-intro__title {
-    margin-top: var(--space-md);
-  }
-
-  .members__heading {
-    margin-bottom: var(--space-xl);
+    font-size: var(--text-sm);
+    color: var(--color-muted);
   }
 
   .members {
     display: grid;
     gap: var(--space-2xl);
+    margin-top: var(--space-xl);
     list-style: none;
-    margin: 0;
     padding: 0;
+  }
+
+  .publications-wrapper {
+    margin-top: var(--space-lg);
+  }
+
+  .footnote {
+    margin-top: var(--space-xl);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-border);
+    font-size: var(--text-sm);
+    color: var(--color-muted);
   }
 
   .growing {

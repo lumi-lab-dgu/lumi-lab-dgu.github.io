@@ -23,6 +23,10 @@ const researchHref = withBase('/research/');
 function projectHref(anchor: string | undefined, id: string): string {
   return `${researchHref}#${anchor ?? id}`;
 }
+
+const heroLead =
+  'We research natural language processing, large language models, and trustworthy ' +
+  `AI—including LLM evaluation, reliable agents, multimodal systems, and AI safety—under Prof. ${site.piName} at ${site.institution}.`;
 ---
 
 <BaseLayout
@@ -35,17 +39,8 @@ function projectHref(anchor: string | undefined, id: string): string {
     <div class="container container--wide hero__inner">
       <div class="hero__content">
         <p class="eyebrow">{site.labName} · {site.institution}</p>
-        <h1 class="hero__title">
-          Understanding AI failures. Building more reliable intelligence.
-        </h1>
-        <p class="lead hero__lead">
-          We study how language and multimodal AI systems judge, follow instructions, use
-          tools, and recover from mistakes—then develop evaluations and methods that make
-          their behavior more dependable in the real world.
-        </p>
-        <p class="hero__identity">
-          LUMI stands for {site.labExpansion}.
-        </p>
+        <h1 class="hero__title">{site.labFullName}</h1>
+        <p class="lead hero__lead">{heroLead}</p>
         <div class="button-row hero__actions">
           <a class="btn btn--primary" href={researchHref}>
             Explore our research
@@ -186,21 +181,15 @@ function projectHref(anchor: string | undefined, id: string): string {
 
   .hero__title {
     margin-top: var(--space-md);
-    font-size: var(--text-hero);
-    line-height: 1.08;
-    letter-spacing: -0.026em;
-    max-width: 15ch;
+    font-size: clamp(2.125rem, 1.55rem + 2.5vw, 3.5rem);
+    line-height: 1.12;
+    letter-spacing: -0.022em;
+    max-width: 24ch;
   }
 
   .hero__lead {
     margin-top: var(--space-lg);
     max-width: 56ch;
-  }
-
-  .hero__identity {
-    margin-top: var(--space-sm);
-    font-size: var(--text-sm);
-    color: var(--color-muted);
   }
 
   .hero__actions {
@@ -222,7 +211,7 @@ function projectHref(anchor: string | undefined, id: string): string {
     }
 
     .hero__title {
-      max-width: 18ch;
+      max-width: 22ch;
     }
 
     .hero__visual {

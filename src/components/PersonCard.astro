@@ -10,9 +10,14 @@ interface Props {
   person: PersonEntry;
   /** Extra links appended after the profile links, e.g. a CV. */
   extraLinks?: SocialLink[];
+  /** `h1` when this profile is the main heading of its page. */
+  headingLevel?: 'h1' | 'h2';
 }
 
-const { person, extraLinks = [] } = Astro.props;
+const { person, extraLinks = [], headingLevel: NameTag = 'h2' } = Astro.props;
+
+/** Sub-headings sit one level under the name so the outline never skips. */
+const SubHeading = NameTag === 'h1' ? 'h2' : 'h3';
 const { name, nameKo, role, affiliation, bioShort, interests, photo } = person.data;
 
 /**
@@ -60,8 +65,8 @@ const allLinks = [...profileLinks, ...extraLinks];
           <Image
             src={optimisedPortrait}
             alt={`Portrait of ${name}`}
-            widths={[240, 400]}
-            sizes="(max-width: 48rem) 8rem, 15rem"
+            widths={[176, 352]}
+            sizes="(max-width: 48rem) 7rem, 11rem"
             loading="eager"
             class="person__photo"
           />
@@ -86,10 +91,10 @@ const allLinks = [...profileLinks, ...extraLinks];
 
   <div class="person__body">
     <header class="person__header">
-      <h2 class="person__name">
+      <NameTag class="person__name">
         {name}
         {nameKo && <span class="person__name-ko" lang="ko">{nameKo}</span>}
-      </h2>
+      </NameTag>
       <p class="person__role">{role}</p>
       <p class="person__affiliation">{affiliation}</p>
     </header>
@@ -101,7 +106,7 @@ const allLinks = [...profileLinks, ...extraLinks];
     {
       interests.length > 0 && (
         <div class="person__interests">
-          <h3 class="person__subheading">Research interests</h3>
+          <SubHeading class="person__subheading">Research interests</SubHeading>
           <ul class="tag-list">
             {interests.map((interest) => (
               <li class="tag">{interest}</li>
@@ -114,7 +119,7 @@ const allLinks = [...profileLinks, ...extraLinks];
     {
       allLinks.length > 0 && (
         <div class="person__links">
-          <h3 class="person__subheading">Links</h3>
+          <SubHeading class="person__subheading">Links</SubHeading>
           <SocialLinks links={allLinks} label={`Profiles and links for ${name}`} />
         </div>
       )
@@ -125,7 +130,7 @@ const allLinks = [...profileLinks, ...extraLinks];
 <style>
   .person {
     display: grid;
-    grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 11rem) minmax(0, 1fr);
     gap: clamp(1.5rem, 0.9rem + 2.4vw, 3rem);
     align-items: start;
   }
@@ -226,7 +231,7 @@ const allLinks = [...profileLinks, ...extraLinks];
     }
 
     .person__portrait {
-      width: 8rem;
+      width: 7rem;
     }
   }
 </style>
