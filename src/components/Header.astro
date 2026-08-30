@@ -1,5 +1,5 @@
 ---
-import LanguageToggle from './LanguageToggle.astro';
+import LanguageSwitch from './LanguageSwitch.astro';
 import Logo from './Logo.astro';
 import { localeHref, ui, type Locale } from '../data/i18n';
 import { hasNews } from '../utils/content';
@@ -56,7 +56,7 @@ const pathname = Astro.url.pathname;
         </ul>
       </nav>
 
-      <LanguageToggle lang={lang} path={path} />
+      <LanguageSwitch lang={lang} path={path} />
 
       <details class="mobile-nav" data-mobile-nav>
         <summary class="mobile-nav__toggle">

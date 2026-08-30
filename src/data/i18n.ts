@@ -20,6 +20,12 @@ export const localeLabel: Record<Locale, string> = {
   ko: '한국어',
 };
 
+/** Short code shown in the language switch. */
+export const localeCode: Record<Locale, string> = {
+  en: 'EN',
+  ko: 'KO',
+};
+
 /** `html lang` value for each version. */
 export const htmlLang: Record<Locale, string> = {
   en: 'en',
@@ -51,8 +57,6 @@ export const ui = {
     common: {
       skipToContent: 'Skip to content',
       languageLabel: 'Language',
-      switchTo: '한국어',
-      switchToTitle: 'View this page in Korean',
       ongoing: 'Ongoing',
       completed: 'Completed',
       paused: 'Paused',
@@ -245,8 +249,6 @@ export const ui = {
     common: {
       skipToContent: '본문으로 건너뛰기',
       languageLabel: '언어',
-      switchTo: 'English',
-      switchToTitle: '이 페이지를 영어로 보기',
       ongoing: '진행 중',
       completed: '완료',
       paused: '중단',
