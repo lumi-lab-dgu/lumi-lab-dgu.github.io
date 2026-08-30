@@ -200,6 +200,9 @@ h4 {
   line-height: 1.18;
   letter-spacing: -0.018em;
   text-wrap: balance;
+  /* Keeps Korean headings from breaking mid-word ("비용" / "을 …");
+     has no effect on Latin text. */
+  word-break: keep-all;
 }
 
 h1 {

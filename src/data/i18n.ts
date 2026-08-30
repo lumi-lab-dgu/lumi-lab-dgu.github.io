@@ -75,11 +75,11 @@ export const ui = {
         'We are growing. Graduate students, undergraduate research interns, and research collaborators are welcome to get in touch.',
       missionTitle: 'Researching reliability where it matters most',
       missionBody:
-        'LUMI—Language Understanding and Machine Intelligence—is a research lab in the Department of Computer Science and Artificial Intelligence at Dongguk University, led by Prof. Yerin Hwang. Our work sits at the intersection of natural language processing, trustworthy AI, agentic systems, and multimodal evaluation. We investigate where advanced AI systems fail under realistic pressure and build benchmarks, analyses, and methods that help make their behavior more reliable.',
+        'Our work sits at the intersection of natural language processing, trustworthy AI, agentic systems, and multimodal evaluation. Strong benchmark scores say little about how a model behaves once instructions conflict, evaluations carry bias, or a first attempt needs fixing. We investigate where AI systems fail under that kind of realistic pressure, and build the benchmarks, analyses, and methods that make their behavior more reliable.',
       projectsEyebrow: 'Ongoing Projects',
       projectsTitle: 'What we are working on',
       projectsIntro:
-        'Each of our current directions takes a way that capable systems still fall short in real use — recovering from a bad result, weighing cost against capability, and holding priorities under conflict.',
+        'Capable systems still fall short in real use. Right now we focus on three of those gaps: recovering from a bad result, weighing cost against capability, and keeping priorities straight under conflict.',
       exploreAllResearch: 'Explore all research',
       areasEyebrow: 'Research Areas',
       areasTitle: 'From evaluation to reliable action',
@@ -118,7 +118,7 @@ export const ui = {
       methodologyEyebrow: 'Methodology',
       methodologyTitle: 'How we work',
       methodologyBody:
-        'We combine benchmark design, behavioral evaluation, human and model-based analysis, controlled interventions, and mechanistic tools. Across projects, we aim to separate capabilities that are often conflated—for example, recognizing an error versus correcting it, representing an instruction priority versus acting on it, or understanding a task versus matching its surface wording.',
+        'We combine benchmark design, behavioral evaluation, human and model-based analysis, and controlled experiments. Across projects, we aim to separate capabilities that are usually measured together, so that an evaluation tells us not just whether a system failed, but which ability failed and under what conditions.',
       collabEyebrow: 'Collaboration',
       collabTitle: 'Work with us',
       collabIntro:
@@ -270,7 +270,7 @@ export const ui = {
         '연구실을 함께 만들어 갈 대학원생, 학부 연구인턴, 공동 연구자의 연락을 환영합니다!',
       missionTitle: 'AI가 어디서 무너지는지를 연구합니다',
       missionBody:
-        'LUMI Lab(Language Understanding and Machine Intelligence)은 동국대학교 컴퓨터AI학부 황예린 교수 연구실입니다. 자연어처리와 신뢰할 수 있는 AI, LLM 에이전트, 멀티모달 평가에 걸친 주제를 다룹니다. 성능이 좋아 보이는 모델이 실제 환경에서 어디서부터 어긋나는지 확인하고, 그 동작을 개선할 benchmark와 분석 방법을 만듭니다.',
+        '자연어처리와 신뢰할 수 있는 AI, LLM 에이전트, 멀티모달 평가가 만나는 지점을 연구합니다. 벤치마크 점수가 높다고 해서 지시가 충돌하거나 평가가 편향되거나 앞선 결과를 고쳐야 하는 상황까지 잘 넘긴다는 보장은 없습니다. 저희는 모델이 이런 현실적인 조건에서 어디서부터 어긋나는지 확인하고, 그 동작을 개선할 benchmark와 분석 방법을 만듭니다.',
       projectsEyebrow: '진행 중인 연구',
       projectsTitle: '지금 다루고 있는 문제',
       projectsIntro:
@@ -313,7 +313,7 @@ export const ui = {
       methodologyEyebrow: '연구 방법',
       methodologyTitle: '연구하는 방식',
       methodologyBody:
-        'benchmark 설계, 행동 기반 평가, 사람과 모델을 함께 활용한 분석, 통제된 개입, mechanistic 분석 도구를 함께 사용합니다. 모든 프로젝트에서 흔히 뭉뚱그려 다루는 능력들을 따로 떼어 보려 합니다. 오류를 알아보는 것과 실제로 고치는 것, 지시의 우선순위를 내부적으로 표현하는 것과 그에 따라 행동하는 것, 과제를 제대로 이해하는 것과 표현만 비슷한 것은 서로 다른 문제입니다.',
+        'benchmark 설계, 행동 기반 평가, 사람과 모델을 함께 활용한 분석, 그리고 통제된 실험을 함께 사용합니다. 모든 프로젝트에서 보통 한꺼번에 측정되는 능력들을 따로 떼어 보려 합니다. 시스템이 실패했는지만이 아니라, 어떤 능력이 어떤 조건에서 부족했는지까지 평가가 알려줄 수 있어야 하기 때문입니다.',
       collabEyebrow: '공동 연구',
       collabTitle: '함께 연구하기',
       collabIntro:

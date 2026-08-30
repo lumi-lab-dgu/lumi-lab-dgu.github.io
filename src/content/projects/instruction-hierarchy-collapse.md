@@ -1,8 +1,8 @@
 ---
 title: Instruction Hierarchy Under Accumulated Conflict
 summary: >-
-  Models are expected to honour which source of instruction outranks another.
-  We study how well that ordering survives once conflicting instructions start
+  A model is expected to respect which source of instructions outranks another.
+  We study how well that ordering holds up once conflicting instructions start
   to pile up.
 status: ongoing
 tags:
