@@ -1,69 +1,118 @@
 ---
 /**
- * Abstract hero graphic: signals travelling around a closed loop through a
- * shared internal representation, rather than a one-way pipeline. Purely
- * decorative — all meaning is carried by the surrounding copy.
+ * Abstract hero graphic tuned to the lab's own subject matter.
+ *
+ * Reading left to right: language goes in, passes through the layers of a
+ * model, and one layer is lit up — the point where the behaviour breaks and
+ * where the lab looks. A dashed path carries that finding back to the input,
+ * because the work is about correction, not a single forward pass.
+ *
+ * The gold light is the one literal nod to the name; everything else stays
+ * geometric. Decorative only — the copy beside it carries the meaning.
  */
+
+/** Model layers, top to bottom. The lit one is where the failure is found. */
+const layers = [
+  { y: 66, lit: false },
+  { y: 98, lit: false },
+  { y: 130, lit: false },
+  { y: 162, lit: true },
+  { y: 194, lit: false },
+  { y: 226, lit: false },
+];
+
+/** Lines of input text, of deliberately uneven length. */
+const inputLines = [
+  { y: 120, width: 96, opacity: 0.8 },
+  { y: 144, width: 74, opacity: 0.5 },
+  { y: 168, width: 88, opacity: 0.65 },
+  { y: 192, width: 56, opacity: 0.38 },
+];
 ---
 
 <div class="hero-visual" aria-hidden="true">
-  <svg viewBox="0 0 480 400" role="presentation" focusable="false">
+  <svg viewBox="0 0 480 340" role="presentation" focusable="false">
     <defs>
       <linearGradient id="lumi-hero-bg" x1="0" y1="0" x2="1" y2="1">
         <stop offset="0%" stop-color="#F5F4FC"></stop>
         <stop offset="100%" stop-color="#FFFFFF"></stop>
       </linearGradient>
       <radialGradient id="lumi-hero-glow" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stop-color="#E5A93A" stop-opacity="0.45"></stop>
+        <stop offset="0%" stop-color="#E5A93A" stop-opacity="0.5"></stop>
         <stop offset="100%" stop-color="#E5A93A" stop-opacity="0"></stop>
       </radialGradient>
     </defs>
 
-    <rect x="0.5" y="0.5" width="479" height="399" rx="18" fill="url(#lumi-hero-bg)"></rect>
-    <rect x="0.5" y="0.5" width="479" height="399" rx="18" fill="none" stroke="#E5E7EB"></rect>
+    <rect x="0.5" y="0.5" width="479" height="339" rx="18" fill="url(#lumi-hero-bg)"></rect>
+    <rect x="0.5" y="0.5" width="479" height="339" rx="18" fill="none" stroke="#E5E7EB"></rect>
 
-    {/* Layer strata — a quiet reference to internal representations. */}
-    <g stroke="#5146B8" stroke-opacity="0.07" stroke-width="1">
-      <path d="M40 128h400M40 200h400M40 272h400"></path>
+    {/* Language in: uneven lines standing for a prompt. */}
+    <g fill="#5146B8">
+      {
+        inputLines.map((line) => (
+          <rect x="52" y={line.y} width={line.width} height="10" rx="5" opacity={line.opacity} />
+        ))
+      }
     </g>
 
-    {/* The loop: instruction, decision, evaluation, feedback, revision. */}
-    <g fill="none" stroke="#5146B8" stroke-opacity="0.4" stroke-width="1.6">
-      <path d="M240 90 Q316 117 373 166"></path>
-      <path d="M373 166 Q360 231 322 289"></path>
-      <path d="M322 289 Q240 303 158 289"></path>
-      <path d="M158 289 Q120 231 107 166"></path>
-      <path d="M107 166 Q164 117 240 90"></path>
+    {/* Into the model. */}
+    <g stroke="#5146B8" stroke-opacity="0.45" stroke-width="1.6" fill="none">
+      <path d="M160 160h26"></path>
+    </g>
+    <path d="M192 160 183 155.5v9z" fill="#5146B8" fill-opacity="0.45"></path>
+
+    {/* The layers of the model. */}
+    <g>
+      {
+        layers.map((layer) =>
+          layer.lit ? (
+            <>
+              <rect
+                x="224"
+                y={layer.y}
+                width="200"
+                height="16"
+                rx="8"
+                fill="#FCF1DC"
+                stroke="#E5A93A"
+                stroke-width="1.8"
+              />
+              <circle cx="266" cy={layer.y + 8} r="2.6" fill="#B9822A" />
+              <circle cx="312" cy={layer.y + 8} r="2.6" fill="#B9822A" />
+              <circle cx="358" cy={layer.y + 8} r="2.6" fill="#B9822A" />
+            </>
+          ) : (
+            <rect
+              x="224"
+              y={layer.y}
+              width="200"
+              height="16"
+              rx="8"
+              fill="#EBE9F8"
+              stroke="#5146B8"
+              stroke-opacity="0.22"
+            />
+          ),
+        )
+      }
     </g>
 
-    {/* Spokes into the shared representation at the centre. */}
-    <g stroke="#5146B8" stroke-opacity="0.22" stroke-width="1" stroke-dasharray="3 5">
-      <path d="M240 90V200M373 166 240 200M322 289 240 200M158 289 240 200M107 166 240 200"></path>
-    </g>
+    {/* The light: the lab's mark, resting on the layer that fails. */}
+    <circle class="hero-visual__glow" cx="204" cy="170" r="34" fill="url(#lumi-hero-glow)"></circle>
+    <path
+      d="M12 1.5c.55 5.2 5.15 9.8 10.35 10.35v.3C17.15 12.7 12.55 17.3 12 22.5h-.3C11.15 17.3 6.55 12.7 1.35 12.15v-.3C6.55 11.3 11.15 6.7 11.7 1.5Z"
+      transform="translate(204 170) scale(1.2) translate(-12 -12)"
+      fill="#E5A93A"></path>
 
-    {/* Centre node. */}
-    <circle cx="240" cy="200" r="27" fill="#FFFFFF" stroke="#5146B8" stroke-opacity="0.28"
-    ></circle>
-    <circle cx="240" cy="200" r="15" fill="#332B82"></circle>
-    <circle cx="240" cy="200" r="6" fill="#FFFFFF" fill-opacity="0.9"></circle>
-
-    {/* Perimeter nodes. */}
-    <circle cx="240" cy="90" r="9" fill="#5146B8"></circle>
-    <circle cx="373" cy="166" r="7" fill="#5146B8" fill-opacity="0.75"></circle>
-    <circle cx="158" cy="289" r="7" fill="#5146B8" fill-opacity="0.75"></circle>
-    <circle cx="107" cy="166" r="9" fill="#5146B8"></circle>
-
-    {/* Accent node: the point where a failure is caught and fed back. */}
-    <circle class="hero-visual__halo" cx="322" cy="289" r="30" fill="url(#lumi-hero-glow)"></circle>
-    <circle cx="322" cy="289" r="9" fill="#E5A93A"></circle>
-    <circle cx="322" cy="289" r="3.2" fill="#FFFFFF" fill-opacity="0.95"></circle>
-
-    {/* Direction cues. */}
-    <g fill="#5146B8" fill-opacity="0.45">
-      <path d="m311 124 9 3.6-7.6 5.7z"></path>
-      <path d="m247 297-8.6 4.6-.6-9.5z"></path>
-      <path d="m161 122 1.8 9.4-9.3-2.1z"></path>
-    </g>
+    {/* And back again: the finding returns to the input. */}
+    <path
+      d="M428 170c26 6 26 96-18 102H150c-32 0-54-14-54-40v-14"
+      fill="none"
+      stroke="#5146B8"
+      stroke-opacity="0.38"
+      stroke-width="1.4"
+      stroke-dasharray="4 6"></path>
+    <path d="M96 210 91.5 219h9z" fill="#5146B8" fill-opacity="0.38"></path>
   </svg>
 </div>
 
@@ -77,16 +126,16 @@
     height: auto;
   }
 
-  .hero-visual__halo {
-    transform-origin: 322px 289px;
+  .hero-visual__glow {
+    transform-origin: 204px 170px;
     animation: hero-pulse 5s var(--easing) infinite;
   }
 
   @keyframes hero-pulse {
     0%,
     100% {
-      opacity: 0.55;
-      transform: scale(0.94);
+      opacity: 0.5;
+      transform: scale(0.9);
     }
     50% {
       opacity: 1;
@@ -95,7 +144,7 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero-visual__halo {
+    .hero-visual__glow {
       animation: none;
       opacity: 0.8;
     }
