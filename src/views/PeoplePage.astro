@@ -72,6 +72,21 @@ const cvLinks: SocialLink[] = publicFileExists(site.cvPath)
     )
   }
 
+  <section class="section section--tint">
+    <div class="container">
+      <div class="growing">
+        <h2 class="growing__title">{t.people.growingTitle}</h2>
+        <p class="growing__body">{t.people.growingBody}</p>
+        <p class="growing__action">
+          <a class="btn btn--primary" href={withBase(localeHref(lang, '/join/'))}>
+            {t.people.joinLumi}
+            <Icon name="arrow-right" size={16} />
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!--
     Publications: metadata stays in English in both versions. Collapsed by
     default so the profile is not buried under the list; the full list is one
@@ -81,10 +96,7 @@ const cvLinks: SocialLink[] = publicFileExists(site.cvPath)
     <div class="container">
       <details class="pubs">
         <summary class="pubs__summary">
-          <h2 class="pubs__heading">
-            {t.people.publicationsHeading}
-            <span class="pubs__count">{publications.length}</span>
-          </h2>
+          <h2 class="pubs__heading">{t.people.publicationsHeading}</h2>
           <span class="pubs__action">
             <span class="pubs__action-show">{t.people.publicationsShow}</span>
             <span class="pubs__action-hide">{t.people.publicationsHide}</span>
@@ -117,21 +129,6 @@ const cvLinks: SocialLink[] = publicFileExists(site.cvPath)
           <p class="footnote">{t.publications.equalContribution}</p>
         </div>
       </details>
-    </div>
-  </section>
-
-  <section class="section section--tint">
-    <div class="container">
-      <div class="growing">
-        <h2 class="growing__title">{t.people.growingTitle}</h2>
-        <p class="growing__body">{t.people.growingBody}</p>
-        <p class="growing__action">
-          <a class="btn btn--primary" href={withBase(localeHref(lang, '/join/'))}>
-            {t.people.joinLumi}
-            <Icon name="arrow-right" size={16} />
-          </a>
-        </p>
-      </div>
     </div>
   </section>
 </BaseLayout>
@@ -180,13 +177,6 @@ const cvLinks: SocialLink[] = publicFileExists(site.cvPath)
     align-items: baseline;
     gap: var(--space-sm);
     font-size: var(--text-h2);
-  }
-
-  .pubs__count {
-    font-family: var(--font-heading);
-    font-size: var(--text-sm);
-    font-weight: 700;
-    color: var(--color-muted);
   }
 
   .pubs__action {
