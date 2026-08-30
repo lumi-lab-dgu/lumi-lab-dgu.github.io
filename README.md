@@ -16,12 +16,13 @@ the site up to date.
 ## Contents
 
 1. [Running the site on your computer](#running-the-site-on-your-computer)
-2. [Everyday content edits](#everyday-content-edits)
-3. [Where everything lives](#where-everything-lives)
-4. [Deploying to GitHub Pages](#deploying-to-github-pages)
-5. [Custom domain](#custom-domain)
-6. [Analytics and privacy](#analytics-and-privacy)
-7. [Design notes](#design-notes)
+2. [English and Korean](#english-and-korean)
+3. [Everyday content edits](#everyday-content-edits)
+4. [Where everything lives](#where-everything-lives)
+5. [Deploying to GitHub Pages](#deploying-to-github-pages)
+6. [Custom domain](#custom-domain)
+7. [Analytics and privacy](#analytics-and-privacy)
+8. [Design notes](#design-notes)
 
 ---
 
@@ -61,6 +62,56 @@ There is one more script, needed only if you change the social-sharing image:
 ```bash
 npm run og      # re-renders public/og/lumi-og.png from public/og/lumi-og.svg
 ```
+
+---
+
+## English and Korean
+
+The site exists in two full versions with a toggle in the header:
+
+| Language | URL |
+| --- | --- |
+| English | `https://lumi-lab-dgu.github.io/` |
+| Korean  | `https://lumi-lab-dgu.github.io/ko/` |
+
+**Some things stay in English in both versions, deliberately:**
+
+- the lab name and its expansion (LUMI, Language Understanding and Machine
+  Intelligence)
+- everything about a publication — title, authors, venue, and the
+  Paper / PDF / Code / Project links
+- the research keyword chips (`LLM-as-a-Judge`, `Tool Use`, …)
+
+That is what keeps the two versions from becoming a burden. The parts that grow
+over time are single-sourced, so **adding a paper never requires a
+translation**. Only the fixed prose is written twice.
+
+### Where each piece of text lives
+
+| Text | File |
+| --- | --- |
+| Every interface string and page paragraph | `src/data/i18n.ts` — `ui.en` and `ui.ko` side by side |
+| Research area titles and descriptions | `src/data/research.ts` — each has `{ en, ko }` |
+| Project titles, summaries, descriptions | `src/content/projects/` (en) and `src/content/projects-ko/` (ko) |
+| PI role, affiliation and biography | `src/content/people/yerin-hwang.md` — `roleKo`, `affiliationKo`, `bioShortKo`, `bioLongKo` |
+| Publications | `src/content/publications/` — English only, used by both versions |
+
+`src/data/i18n.ts` is the file to open for almost any wording change. The
+English and Korean objects have identical shapes, so if you add a key to one
+and forget the other, `npm run check` fails and names the missing key.
+
+### Adding a page
+
+Page bodies live once in `src/views/`, and `src/pages/` holds two thin route
+files per page — one English, one Korean — that render the same view with a
+different `lang`. To add a page, create the view, then a route file in
+`src/pages/` and one in `src/pages/ko/`.
+
+### If a translation is missing
+
+Korean project files and Korean person fields fall back to the English text
+rather than rendering blank, so a half-translated entry still produces a
+complete page.
 
 ---
 
@@ -113,6 +164,12 @@ every project with `visible: true`, grouped by status.
 To mark a project finished, change `status` to `completed`. It moves below the
 ongoing projects on the Research page and its card label changes.
 
+For the Korean version, add a file of the **same name** in
+`src/content/projects-ko/` with just `title`, `summary` and the Korean body.
+Structure — status, tags, order, anchor — always comes from the English file, so
+it is never defined twice. Without the Korean file the project still appears on
+`/ko/`, showing the English text.
+
 ### Add a publication
 
 Create a new file in `src/content/publications/`. Only frontmatter is used —
@@ -142,6 +199,7 @@ order: 1                    # ordering within the year
 
 Notes:
 
+- Publications are **not translated** — the same entry serves both versions.
 - Wrap the title in double quotes if it contains a colon.
 - Append `*` to an author name for equal contribution. The
   `* Equal contribution.` footnote appears automatically when at least one
@@ -223,6 +281,9 @@ An optional longer biography.
 Members appear under the PI on `/people/`, in `order`. Keep `lead: true` on the
 PI only.
 
+Optional Korean fields: `roleKo`, `affiliationKo`, `bioShortKo`, `bioLongKo`.
+Each falls back to its English counterpart when absent.
+
 ### Add the PI photo
 
 Put the image at **either** of these paths, using the file name in the `photo:`
@@ -256,10 +317,12 @@ src/
   components/     reusable pieces of the interface
   content/        all editable content (projects, people, publications, news)
   data/
-    site.ts       lab name, PI details, email, address, navigation
+    site.ts       lab name, PI details, email, address
+    i18n.ts       every English and Korean interface string and paragraph
     research.ts   the four research areas and the three principles
   layouts/        the page shell shared by every page
-  pages/          one file per URL
+  views/          one file per page, shared by both languages
+  pages/          thin route files: src/pages (English), src/pages/ko (Korean)
   styles/
     global.css    colours, typography, spacing, shared components
   utils/

@@ -1,5 +1,6 @@
 ---
 import { site } from '../data/site';
+import { defaultLocale, localeHref, type Locale } from '../data/i18n';
 import { withBase } from '../utils/paths';
 
 interface Props {
@@ -9,11 +10,15 @@ interface Props {
   asLink?: boolean;
   /** Use the light-on-dark palette. */
   onDark?: boolean;
+  lang?: Locale;
 }
 
-const { variant = 'full', asLink = true, onDark = false } = Astro.props;
+const { variant = 'full', asLink = true, onDark = false, lang = defaultLocale } = Astro.props;
 const Tag = asLink ? 'a' : 'div';
-const linkProps = asLink ? { href: withBase('/'), 'aria-label': site.srLabel } : {};
+// The wordmark and its expansion stay in English in both versions.
+const linkProps = asLink
+  ? { href: withBase(localeHref(lang, '/')), 'aria-label': site.srLabel }
+  : {};
 ---
 
 <Tag class:list={['logo', { 'logo--on-dark': onDark }]} {...linkProps}>

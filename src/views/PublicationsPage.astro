@@ -1,0 +1,122 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PublicationList from '../components/PublicationList.astro';
+import { ui, type Locale } from '../data/i18n';
+import { getPublications, groupPublicationsByYear } from '../utils/content';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+
+const publications = await getPublications();
+const years = groupPublicationsByYear(publications).map((group) => group.year);
+
+/** The footnote only appears when some author is actually marked with "*". */
+const hasEqualContribution = publications.some((publication) =>
+  publication.data.authors.some((author) => author.includes('*')),
+);
+---
+
+<BaseLayout
+  title={t.nav.publications}
+  description={t.publications.metaDescription}
+  lang={lang}
+  path="/publications/"
+>
+  <section class="section page-intro">
+    <div class="container">
+      <div class="page-intro__inner">
+        <p class="eyebrow">{t.publications.eyebrow}</p>
+        <h1 class="page-intro__title">{t.publications.title}</h1>
+        <p class="lead page-intro__lead">{t.publications.intro}</p>
+        {
+          years.length > 1 && (
+            <nav class="year-nav" aria-label={t.publications.jumpToYear}>
+              <ul class="year-nav__list">
+                {years.map((year) => (
+                  <li>
+                    <a class="year-nav__link" href={`#year-${year}`}>
+                      {year}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Publication metadata stays in English in both versions. -->
+  <section class="section section--tight section--surface">
+    <div class="container">
+      <PublicationList publications={publications} variant="full" lang={lang} />
+      {
+        hasEqualContribution && (
+          <p class="footnote">
+            <span aria-hidden="true">{t.publications.equalContribution}</span>
+            <span class="visually-hidden">{t.publications.equalContributionSr}</span>
+          </p>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-intro__inner {
+    max-width: var(--width-prose);
+  }
+
+  .page-intro__title {
+    margin-top: var(--space-md);
+    word-break: keep-all;
+  }
+
+  .page-intro__lead {
+    margin-top: var(--space-lg);
+    word-break: keep-all;
+  }
+
+  .year-nav {
+    margin-top: var(--space-lg);
+  }
+
+  .year-nav__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .year-nav__link {
+    display: inline-block;
+    padding: 0.3rem 0.75rem;
+    border: 1px solid var(--color-border-control);
+    border-radius: 999px;
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-muted-strong);
+    text-decoration: none;
+  }
+
+  .year-nav__link:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary-dark);
+  }
+
+  .footnote {
+    margin-top: var(--space-xl);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-border);
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+  }
+</style>

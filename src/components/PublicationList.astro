@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import { defaultLocale, type Locale } from '../data/i18n';
 import { site } from '../data/site';
 import { groupPublicationsByYear, type PublicationEntry } from '../utils/content';
 
@@ -15,9 +16,10 @@ interface Props {
    * the list nests correctly under whatever section contains it.
    */
   headingLevel?: 'h2' | 'h3';
+  lang?: Locale;
 }
 
-const { publications, variant = 'full', headingLevel = 'h2' } = Astro.props;
+const { publications, variant = 'full', headingLevel = 'h2', lang = defaultLocale } = Astro.props;
 
 const YearHeading = headingLevel;
 const TitleHeading = headingLevel === 'h2' ? 'h3' : 'h4';
@@ -45,7 +47,7 @@ function actionsFor(publication: PublicationEntry) {
 }
 ---
 
-<div class:list={['publications', `publications--${variant}`]}>
+<div class:list={['publications', `publications--${variant}`]} lang="en">
   {
     groups.map((group) => (
       <section class="publications__group">
@@ -93,7 +95,11 @@ function actionsFor(publication: PublicationEntry) {
                     )}
                   {showEraLabels && (
                     <span class="publication__era">
-                      {publication.data.labEra === 'lumi' ? 'LUMI Lab' : 'Prior to LUMI'}
+                      {publication.data.labEra === 'lumi'
+                        ? 'LUMI Lab'
+                        : lang === 'ko'
+                          ? 'LUMI 이전'
+                          : 'Prior to LUMI'}
                     </span>
                   )}
                 </p>

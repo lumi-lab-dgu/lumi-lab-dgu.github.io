@@ -1,27 +1,36 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
+import { ui } from '../data/i18n';
 import { withBase } from '../utils/paths';
+
+/**
+ * GitHub Pages serves one 404 for the whole site, including /ko/ paths, so this
+ * page carries both languages rather than picking one.
+ */
+const en = ui.en.notFound;
+const ko = ui.ko.notFound;
 ---
 
 <BaseLayout
   title="Page not found"
-  description="The page you are looking for does not exist or may have moved."
+  description={en.metaDescription}
+  lang="en"
+  path="/404.html"
 >
   <section class="section not-found">
     <div class="container">
       <div class="not-found__inner">
         <p class="eyebrow">404</p>
-        <h1 class="not-found__title">This page wandered off the research path.</h1>
-        <p class="lead not-found__body">
-          The page you’re looking for doesn’t exist or may have moved.
-        </p>
+        <h1 class="not-found__title">{en.title}</h1>
+        <p class="lead not-found__body">{en.body}</p>
+        <p class="not-found__body-ko" lang="ko">{ko.body}</p>
         <div class="button-row not-found__actions">
           <a class="btn btn--primary" href={withBase('/')}>
-            Back to LUMI
+            {en.cta}
             <Icon name="arrow-right" size={16} />
           </a>
-          <a class="btn btn--secondary" href={withBase('/research/')}>Research</a>
+          <a class="btn btn--secondary" href={withBase('/ko/')} lang="ko">{ko.cta}</a>
         </div>
       </div>
     </div>
@@ -43,6 +52,12 @@ import { withBase } from '../utils/paths';
 
   .not-found__body {
     margin-top: var(--space-lg);
+  }
+
+  .not-found__body-ko {
+    margin-top: var(--space-sm);
+    color: var(--color-muted);
+    word-break: keep-all;
   }
 
   .not-found__actions {

@@ -1,27 +1,23 @@
 ---
 import Icon from './Icon.astro';
 import SectionHeading from './SectionHeading.astro';
+import { localeHref, ui, type Locale } from '../data/i18n';
 import { withBase } from '../utils/paths';
 
 interface Props {
-  eyebrow?: string;
-  title?: string;
-  body?: string;
-  primaryLabel?: string;
-  primaryHref?: string;
-  secondaryLabel?: string;
-  secondaryHref?: string;
+  lang: Locale;
 }
 
-const {
-  eyebrow = 'Join LUMI',
-  title = 'We are building a new research group.',
-  body = 'We welcome students and collaborators who want to study trustworthy AI through careful experiments, strong evaluations, and questions that matter beyond benchmark scores.',
-  primaryLabel = 'Research opportunities',
-  primaryHref = withBase('/join/'),
-  secondaryLabel = 'Contact us',
-  secondaryHref = withBase('/contact/'),
-} = Astro.props;
+const { lang } = Astro.props;
+const t = ui[lang];
+
+const eyebrow = t.cta.eyebrow;
+const title = t.cta.title;
+const body = t.cta.body;
+const primaryLabel = t.cta.primary;
+const primaryHref = withBase(localeHref(lang, '/join/'));
+const secondaryLabel = t.cta.secondary;
+const secondaryHref = withBase(localeHref(lang, '/contact/'));
 ---
 
 <section class="section section--dark join-callout">

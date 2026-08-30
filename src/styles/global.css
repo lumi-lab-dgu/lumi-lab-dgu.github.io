@@ -358,6 +358,30 @@ main {
   color: var(--color-muted);
 }
 
+/* --------------------------------------------------------------------------
+   Korean text set beneath its English counterpart.
+
+   `word-break: keep-all` stops Korean wrapping mid-word, which is the default
+   and reads badly. The muted colour marks the block as the same content in
+   another language rather than as new information.
+   -------------------------------------------------------------------------- */
+
+.lang-ko {
+  margin-top: var(--space-sm);
+  color: var(--color-muted);
+  line-height: 1.8;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.lang-ko--sm {
+  font-size: var(--text-sm);
+}
+
+.section--dark .lang-ko {
+  color: var(--color-on-dark-muted);
+}
+
 .text-sm {
   font-size: var(--text-sm);
 }

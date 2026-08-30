@@ -1,4 +1,6 @@
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getCollection, getEntry, render, type CollectionEntry } from 'astro:content';
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
+import type { Locale } from '../data/i18n';
 
 export type ProjectEntry = CollectionEntry<'projects'>;
 export type PersonEntry = CollectionEntry<'people'>;
@@ -16,6 +18,60 @@ export async function getProjects(): Promise<ProjectEntry[]> {
 /** Visible, featured projects — the home-page "Ongoing Projects" cards. */
 export async function getFeaturedProjects(): Promise<ProjectEntry[]> {
   return (await getProjects()).filter(({ data }) => data.featured);
+}
+
+/**
+ * A project with its text resolved for one language.
+ *
+ * Structure (status, tags, order, anchor) always comes from the English entry;
+ * only the prose is swapped, so a project can never be half-defined.
+ */
+export interface LocalizedProject {
+  id: string;
+  anchor: string;
+  status: ProjectEntry['data']['status'];
+  tags: string[];
+  externalUrl?: string;
+  title: string;
+  shortTitle?: string;
+  summary: string;
+  Content: AstroComponentFactory;
+}
+
+async function localizeProject(
+  entry: ProjectEntry,
+  locale: Locale,
+): Promise<LocalizedProject> {
+  const translation =
+    locale === 'ko' ? await getEntry('projectsKo', entry.id) : undefined;
+  const source = translation ?? entry;
+  const { Content } = await render(source);
+
+  return {
+    id: entry.id,
+    anchor: entry.data.anchor ?? entry.id,
+    status: entry.data.status,
+    tags: entry.data.tags,
+    externalUrl: entry.data.externalUrl,
+    title: translation?.data.title ?? entry.data.title,
+    shortTitle: translation?.data.shortTitle ?? entry.data.shortTitle,
+    summary: translation?.data.summary ?? entry.data.summary,
+    Content,
+  };
+}
+
+/** Visible projects with text in `locale`, ordered as the English entries are. */
+export async function getLocalizedProjects(locale: Locale): Promise<LocalizedProject[]> {
+  const entries = await getProjects();
+  return Promise.all(entries.map((entry) => localizeProject(entry, locale)));
+}
+
+/** Featured projects with text in `locale` — the home-page cards. */
+export async function getLocalizedFeaturedProjects(
+  locale: Locale,
+): Promise<LocalizedProject[]> {
+  const entries = await getFeaturedProjects();
+  return Promise.all(entries.map((entry) => localizeProject(entry, locale)));
 }
 
 /** Visible people, PI first, then by `order`. */

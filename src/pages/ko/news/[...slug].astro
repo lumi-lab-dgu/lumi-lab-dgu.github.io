@@ -1,7 +1,7 @@
 ---
 import type { GetStaticPaths } from 'astro';
-import NewsPage from '../../views/NewsPage.astro';
-import { getNews } from '../../utils/content';
+import NewsPage from '../../../views/NewsPage.astro';
+import { getNews } from '../../../utils/content';
 
 /**
  * The news index builds only when the collection has visible entries, so an
@@ -13,4 +13,4 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 ---
 
-<NewsPage lang="en" />
+<NewsPage lang="ko" />

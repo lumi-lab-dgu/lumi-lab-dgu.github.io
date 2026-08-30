@@ -1,0 +1,154 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import PersonCard from '../components/PersonCard.astro';
+import PublicationList from '../components/PublicationList.astro';
+import type { SocialLink } from '../components/SocialLinks.astro';
+import { localeHref, ui, type Locale } from '../data/i18n';
+import { site } from '../data/site';
+import { getPeople, getPublications } from '../utils/content';
+import { publicFileExists } from '../utils/assets';
+import { withBase } from '../utils/paths';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+
+const people = await getPeople();
+const lead = people.find((person) => person.data.lead);
+const members = people.filter((person) => !person.data.lead);
+const publications = await getPublications();
+
+/** English long biography comes from the Markdown body of the person entry. */
+const LeadBio = lead && lang === 'en' ? (await render(lead)).Content : undefined;
+
+/** The CV button only exists when the PDF has actually been added. */
+const cvLinks: SocialLink[] = publicFileExists(site.cvPath)
+  ? [{ label: t.people.cv, href: withBase(site.cvPath), icon: 'document' }]
+  : [];
+---
+
+<BaseLayout
+  title={t.nav.people}
+  description={t.people.metaDescription}
+  lang={lang}
+  path="/people/"
+>
+  <!-- PI profile. Its name is the page heading, so there is no separate title block. -->
+  <section class="section section--tight">
+    <div class="container">
+      {
+        lead && (
+          <PersonCard person={lead} lang={lang} extraLinks={cvLinks} headingLevel="h1">
+            {LeadBio && (
+              <div class="person__long-bio">
+                <LeadBio />
+              </div>
+            )}
+          </PersonCard>
+        )
+      }
+    </div>
+  </section>
+
+  {
+    members.length > 0 && (
+      <section class="section section--surface">
+        <div class="container">
+          <h2 class="section-title">{t.people.labMembers}</h2>
+          <ul class="members">
+            {members.map((member) => (
+              <li>
+                <PersonCard person={member} lang={lang} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Publications: metadata stays in English in both versions. -->
+  <section class="section section--surface">
+    <div class="container">
+      <h2 class="section-title">{t.people.publicationsHeading}</h2>
+      <p class="section-note">{t.people.publicationsNote}</p>
+      <div class="publications-wrapper">
+        <PublicationList
+          publications={publications}
+          variant="full"
+          headingLevel="h3"
+          lang={lang}
+        />
+        <p class="footnote">{t.publications.equalContribution}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint">
+    <div class="container">
+      <div class="growing">
+        <h2 class="growing__title">{t.people.growingTitle}</h2>
+        <p class="growing__body">{t.people.growingBody}</p>
+        <p class="growing__action">
+          <a class="btn btn--primary" href={withBase(localeHref(lang, '/join/'))}>
+            {t.people.joinLumi}
+            <Icon name="arrow-right" size={16} />
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .section-title {
+    font-size: var(--text-h2);
+  }
+
+  .section-note {
+    margin-top: var(--space-xs);
+    max-width: var(--width-prose);
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+    word-break: keep-all;
+  }
+
+  .members {
+    display: grid;
+    gap: var(--space-2xl);
+    margin-top: var(--space-xl);
+    list-style: none;
+    padding: 0;
+  }
+
+  .publications-wrapper {
+    margin-top: var(--space-lg);
+  }
+
+  .footnote {
+    margin-top: var(--space-xl);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-border);
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+  }
+
+  .growing {
+    max-width: var(--width-prose);
+  }
+
+  .growing__body {
+    margin-top: var(--space-md);
+    color: var(--color-muted-strong);
+    word-break: keep-all;
+  }
+
+  .growing__action {
+    margin-top: var(--space-lg);
+  }
+</style>

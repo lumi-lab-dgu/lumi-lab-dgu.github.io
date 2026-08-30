@@ -1,15 +1,17 @@
 ---
 import Icon from './Icon.astro';
+import { defaultLocale, type Locale } from '../data/i18n';
 import type { NewsEntry } from '../utils/content';
 
 interface Props {
   news: NewsEntry[];
   headingLevel?: 'h2' | 'h3' | 'h4';
+  lang?: Locale;
 }
 
-const { news, headingLevel: Heading = 'h3' } = Astro.props;
+const { news, headingLevel: Heading = 'h3', lang = defaultLocale } = Astro.props;
 
-const dateFormatter = new Intl.DateTimeFormat('en-GB', {
+const dateFormatter = new Intl.DateTimeFormat(lang === 'ko' ? 'ko-KR' : 'en-GB', {
   day: 'numeric',
   month: 'short',
   year: 'numeric',

@@ -1,0 +1,255 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import ResearchAreas from '../components/ResearchAreas.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { localeHref, ui, type Locale } from '../data/i18n';
+import { researchPrinciples } from '../data/research';
+import { links, site } from '../data/site';
+import { getLocalizedProjects } from '../utils/content';
+import { withBase } from '../utils/paths';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+
+const projects = await getLocalizedProjects(lang);
+const ongoing = projects.filter((project) => project.status === 'ongoing');
+const other = projects.filter((project) => project.status !== 'ongoing');
+
+const statusLabel = (status: string) =>
+  status === 'ongoing' ? t.common.ongoing : status === 'completed' ? t.common.completed : t.common.paused;
+---
+
+<BaseLayout
+  title={t.nav.research}
+  description={t.research.metaDescription}
+  lang={lang}
+  path="/research/"
+>
+  <!-- Intro -->
+  <section class="section page-intro">
+    <div class="container">
+      <div class="page-intro__inner">
+        <p class="eyebrow">{t.research.kicker}</p>
+        <h1 class="page-intro__title">{t.research.title}</h1>
+        <p class="lead page-intro__lead">{t.research.intro}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Four research areas -->
+  <section class="section section--surface">
+    <div class="container">
+      <SectionHeading
+        eyebrow={t.research.areasEyebrow}
+        title={t.research.areasTitle}
+        description={t.research.areasIntro}
+      />
+      <div class="block-spacer">
+        <ResearchAreas lang={lang} headingLevel="h3" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Ongoing projects, in detail -->
+  <section class="section">
+    <div class="container">
+      <SectionHeading
+        eyebrow={t.research.ongoingEyebrow}
+        title={t.research.ongoingTitle}
+        description={t.research.ongoingIntro}
+      />
+
+      <div class="projects">
+        {
+          [...ongoing, ...other].map((project) => (
+            <article class="project-detail" id={project.anchor}>
+              <div class="project-detail__head">
+                <p
+                  class:list={[
+                    'status-label',
+                    { 'status-label--muted': project.status !== 'ongoing' },
+                  ]}
+                >
+                  {statusLabel(project.status)}
+                </p>
+                <h3 class="project-detail__title">{project.title}</h3>
+                {project.tags.length > 0 && (
+                  <ul class="tag-list project-detail__tags">
+                    {/* Keywords stay in English in both versions. */}
+                    {project.tags.map((tag) => (
+                      <li class="tag" lang="en">
+                        {tag}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+              <div class="project-detail__body">
+                <project.Content />
+                {project.externalUrl && (
+                  <p>
+                    <a class="arrow-link" href={project.externalUrl}>
+                      {t.research.projectPage}
+                      <Icon name="arrow-up-right" size={16} class="arrow-link__icon" />
+                    </a>
+                  </p>
+                )}
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- How we work -->
+  <section class="section section--tint">
+    <div class="container">
+      <SectionHeading
+        eyebrow={t.research.methodologyEyebrow}
+        title={t.research.methodologyTitle}
+      />
+      <div class="how-we-work">
+        <p class="how-we-work__body">{t.research.methodologyBody}</p>
+
+        <ul class="principles">
+          {
+            researchPrinciples.map((principle) => (
+              <li class="principle">
+                <h3 class="principle__title">{principle.title[lang]}</h3>
+                <p class="principle__description">{principle.description[lang]}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Collaboration -->
+  <section class="section section--surface">
+    <div class="container">
+      <SectionHeading
+        eyebrow={t.research.collabEyebrow}
+        title={t.research.collabTitle}
+        description={t.research.collabIntro}
+      />
+      <div class="button-row block-spacer">
+        <a class="btn btn--primary" href={withBase(localeHref(lang, '/join/'))}>
+          {t.research.researchOpportunities}
+          <Icon name="arrow-right" size={16} />
+        </a>
+        <a class="btn btn--secondary" href={links.email}>
+          {lang === 'ko' ? t.common.emailPi : `Email Prof. ${site.piName}`}
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-intro__inner {
+    max-width: var(--width-prose);
+  }
+
+  .page-intro__title {
+    margin-top: var(--space-md);
+    word-break: keep-all;
+  }
+
+  .page-intro__lead {
+    margin-top: var(--space-lg);
+    word-break: keep-all;
+  }
+
+  .block-spacer {
+    margin-top: var(--space-xl);
+  }
+
+  /* --- Project details --- */
+
+  .projects {
+    margin-top: var(--space-xl);
+  }
+
+  .project-detail {
+    display: grid;
+    grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
+    gap: clamp(1.5rem, 0.8rem + 2.8vw, 3.5rem);
+    padding-block: clamp(1.75rem, 1.2rem + 2vw, 2.75rem);
+    scroll-margin-top: calc(var(--header-height) + var(--space-lg));
+  }
+
+  .project-detail + .project-detail {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .project-detail__title {
+    margin-top: var(--space-sm);
+    font-size: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
+    word-break: keep-all;
+  }
+
+  .project-detail__tags {
+    margin-top: var(--space-md);
+  }
+
+  .project-detail__body {
+    max-width: 68ch;
+  }
+
+  .project-detail__body :global(p) {
+    word-break: keep-all;
+  }
+
+  .project-detail__body :global(p + p) {
+    margin-top: var(--space-md);
+  }
+
+  @media (max-width: 56rem) {
+    .project-detail {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  /* --- How we work --- */
+
+  .how-we-work {
+    margin-top: var(--space-xl);
+  }
+
+  .how-we-work__body {
+    max-width: 72ch;
+    word-break: keep-all;
+  }
+
+  .principles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: var(--space-lg);
+    margin-top: var(--space-xl);
+    list-style: none;
+    padding: 0;
+  }
+
+  .principle {
+    padding-top: var(--space-md);
+    border-top: 2px solid var(--color-primary);
+  }
+
+  .principle__title {
+    font-size: 1.0625rem;
+  }
+
+  .principle__description {
+    margin-top: var(--space-xs);
+    font-size: var(--text-sm);
+    color: var(--color-muted-strong);
+    word-break: keep-all;
+  }
+</style>

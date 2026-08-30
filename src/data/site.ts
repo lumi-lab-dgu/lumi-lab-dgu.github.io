@@ -16,7 +16,9 @@ export const site = {
   labExpansion: 'Language Understanding and Machine Intelligence',
 
   institution: 'Dongguk University',
+  institutionKo: '동국대학교',
   department: 'Department of Computer Science and Artificial Intelligence',
+  departmentKo: '컴퓨터AI학부',
   location: 'Seoul, Republic of Korea',
 
   piName: 'Yerin Hwang',
@@ -26,6 +28,8 @@ export const site = {
    * 'Incoming Assistant Professor · starting September 2026'
    */
   piTitle: 'Assistant Professor',
+  /** Korean job title, shown alongside the English one. */
+  piTitleKo: '조교수',
 
   email: 'yerinhwang@dongguk.edu',
 

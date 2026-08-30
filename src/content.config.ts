@@ -29,6 +29,20 @@ const projects = defineCollection({
   }),
 });
 
+/**
+ * Korean text for the projects above, in files of the same name.
+ * Everything structural — status, tags, order, anchor — comes from the English
+ * entry, so a project is never half-defined in one language.
+ */
+const projectsKo = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/projects-ko' }),
+  schema: z.object({
+    title: z.string(),
+    shortTitle: z.string().optional(),
+    summary: z.string(),
+  }),
+});
+
 /** Lab members. The Markdown body holds the optional long biography. */
 const people = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/people' }),
@@ -36,10 +50,16 @@ const people = defineCollection({
     name: z.string(),
     nameKo: z.string().optional(),
     role: z.string(),
+    roleKo: z.string().optional(),
     /** Set true for the PI so the profile renders in the lead position. */
     lead: z.boolean().default(false),
     affiliation: z.string(),
+    affiliationKo: z.string().optional(),
     bioShort: z.string(),
+    /** Korean biography. Falls back to the English one when absent. */
+    bioShortKo: z.string().optional(),
+    /** Korean equivalent of the Markdown body. */
+    bioLongKo: z.string().optional(),
     interests: z.array(z.string()).default([]),
     email: z.email().optional(),
     website: z.url().optional(),
@@ -103,4 +123,4 @@ const news = defineCollection({
   }),
 });
 
-export const collections = { projects, people, publications, news };
+export const collections = { projects, projectsKo, people, publications, news };

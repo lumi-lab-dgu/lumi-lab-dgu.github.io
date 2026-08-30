@@ -2,23 +2,33 @@
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import SocialLinks, { type SocialLink } from './SocialLinks.astro';
+import { ui, type Locale } from '../data/i18n';
 import type { PersonEntry } from '../utils/content';
 import { publicFileExists } from '../utils/assets';
 import { withBase } from '../utils/paths';
 
 interface Props {
   person: PersonEntry;
+  lang: Locale;
   /** Extra links appended after the profile links, e.g. a CV. */
   extraLinks?: SocialLink[];
   /** `h1` when this profile is the main heading of its page. */
   headingLevel?: 'h1' | 'h2';
 }
 
-const { person, extraLinks = [], headingLevel: NameTag = 'h2' } = Astro.props;
+const { person, lang, extraLinks = [], headingLevel: NameTag = 'h2' } = Astro.props;
+const t = ui[lang];
 
 /** Sub-headings sit one level under the name so the outline never skips. */
 const SubHeading = NameTag === 'h1' ? 'h2' : 'h3';
-const { name, nameKo, role, affiliation, bioShort, interests, photo } = person.data;
+const { name, nameKo, interests, photo } = person.data;
+
+// Korean fields fall back to English, so a half-translated entry still renders.
+const isKo = lang === 'ko';
+const role = (isKo && person.data.roleKo) || person.data.role;
+const affiliation = (isKo && person.data.affiliationKo) || person.data.affiliation;
+const bioShort = (isKo && person.data.bioShortKo) || person.data.bioShort;
+const bioLongKo = isKo ? person.data.bioLongKo : undefined;
 
 /**
  * Portraits are looked up in src/assets/people/ first so astro:assets can
@@ -64,7 +74,7 @@ const allLinks = [...profileLinks, ...extraLinks];
         optimisedPortrait ? (
           <Image
             src={optimisedPortrait}
-            alt={`Portrait of ${name}`}
+            alt={`${t.people.portraitOf} ${name}`}
             widths={[176, 352]}
             sizes="(max-width: 48rem) 7rem, 11rem"
             loading="eager"
@@ -73,7 +83,7 @@ const allLinks = [...profileLinks, ...extraLinks];
         ) : publicPortrait ? (
           <img
             src={publicPortrait}
-            alt={`Portrait of ${name}`}
+            alt={`${t.people.portraitOf} ${name}`}
             width="480"
             height="480"
             loading="eager"
@@ -81,7 +91,7 @@ const allLinks = [...profileLinks, ...extraLinks];
             class="person__photo"
           />
         ) : (
-          <div class="person__initials" role="img" aria-label={`${name} — portrait not yet added`}>
+          <div class="person__initials" role="img" aria-label={`${name} — ${t.people.portraitPending}`}>
             <span aria-hidden="true">{initials}</span>
           </div>
         )
@@ -101,12 +111,12 @@ const allLinks = [...profileLinks, ...extraLinks];
 
     <p class="person__bio">{bioShort}</p>
 
-    <slot />
+    {bioLongKo ? <p class="person__long-bio">{bioLongKo}</p> : <slot />}
 
     {
       interests.length > 0 && (
         <div class="person__interests">
-          <SubHeading class="person__subheading">Research interests</SubHeading>
+          <SubHeading class="person__subheading">{t.people.researchInterests}</SubHeading>
           <ul class="tag-list">
             {interests.map((interest) => (
               <li class="tag">{interest}</li>
@@ -119,8 +129,8 @@ const allLinks = [...profileLinks, ...extraLinks];
     {
       allLinks.length > 0 && (
         <div class="person__links">
-          <SubHeading class="person__subheading">Links</SubHeading>
-          <SocialLinks links={allLinks} label={`Profiles and links for ${name}`} />
+          <SubHeading class="person__subheading">{t.people.links}</SubHeading>
+          <SocialLinks links={allLinks} label={`${t.people.links} — ${name}`} />
         </div>
       )
     }
@@ -199,6 +209,11 @@ const allLinks = [...profileLinks, ...extraLinks];
   .person__bio {
     margin-top: var(--space-lg);
     max-width: 68ch;
+    word-break: keep-all;
+  }
+
+  .person__body :global(p) {
+    word-break: keep-all;
   }
 
   .person__body :global(.person__long-bio) {

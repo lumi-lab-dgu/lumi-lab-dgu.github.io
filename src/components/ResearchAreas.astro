@@ -1,22 +1,27 @@
 ---
 import { researchAreas } from '../data/research';
+import type { Locale } from '../data/i18n';
 
 interface Props {
+  lang: Locale;
   headingLevel?: 'h3' | 'h4';
 }
 
-const { headingLevel: Heading = 'h3' } = Astro.props;
+const { lang, headingLevel: Heading = 'h3' } = Astro.props;
 ---
 
 <ul class="research-areas">
   {
     researchAreas.map((area) => (
       <li class="research-area" id={area.id}>
-        <Heading class="research-area__title">{area.title}</Heading>
-        <p class="research-area__description">{area.description}</p>
+        <Heading class="research-area__title">{area.title[lang]}</Heading>
+        <p class="research-area__description">{area.description[lang]}</p>
         <ul class="tag-list research-area__keywords">
+          {/* Keywords stay in English in both versions. */}
           {area.keywords.map((keyword) => (
-            <li class="tag">{keyword}</li>
+            <li class="tag" lang="en">
+              {keyword}
+            </li>
           ))}
         </ul>
       </li>
@@ -68,6 +73,7 @@ const { headingLevel: Heading = 'h3' } = Astro.props;
 
   .research-area__description {
     font-size: var(--text-sm);
+    word-break: keep-all;
     line-height: 1.65;
     color: var(--color-muted-strong);
   }

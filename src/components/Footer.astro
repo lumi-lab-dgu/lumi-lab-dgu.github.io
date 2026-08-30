@@ -1,31 +1,45 @@
 ---
+import { localeHref, ui, type Locale } from '../data/i18n';
 import { links, site } from '../data/site';
 import { withBase } from '../utils/paths';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
 
 const year = new Date().getFullYear();
 
 const footerLinks = [
-  { label: 'Research', href: withBase('/research/') },
-  { label: 'People', href: withBase('/people/') },
-  { label: 'Publications', href: withBase('/publications/') },
-  { label: 'Join', href: withBase('/join/') },
-  { label: 'Email', href: links.email },
+  { label: t.nav.research, href: withBase(localeHref(lang, '/research/')) },
+  { label: t.nav.people, href: withBase(localeHref(lang, '/people/')) },
+  { label: t.nav.publications, href: withBase(localeHref(lang, '/publications/')) },
+  { label: t.nav.join, href: withBase(localeHref(lang, '/join/')) },
+  { label: t.common.email, href: links.email },
 ];
+
+const institution = lang === 'ko' ? site.institutionKo : site.institution;
+const department =
+  lang === 'ko' ? `${site.institutionKo} ${site.departmentKo}` : site.department;
+const location = lang === 'ko' ? '서울, 대한민국' : site.location;
 ---
 
 <footer class="site-footer">
   <div class="container container--wide site-footer__inner">
     <div class="site-footer__identity">
       <p class="site-footer__copyright">
-        © {year} {site.labName} · {site.institution}
+        © {year} {site.labName} · {institution}
       </p>
-      <p class="site-footer__expansion">{site.labExpansion}</p>
+      {/* The expansion stays in English: it is the lab's name, not prose. */}
+      <p class="site-footer__expansion" lang="en">{site.labExpansion}</p>
       <p class="site-footer__department">
-        {site.department} · {site.location}
+        {department} · {location}
       </p>
     </div>
 
-    <nav class="site-footer__nav" aria-label="Footer">
+    <nav class="site-footer__nav" aria-label={t.common.footerNav}>
       <ul class="site-footer__list">
         {
           footerLinks.map((item) => (

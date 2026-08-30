@@ -1,23 +1,29 @@
 ---
 import Icon from './Icon.astro';
-import type { ProjectEntry } from '../utils/content';
+import { ui, type Locale } from '../data/i18n';
+import type { LocalizedProject } from '../utils/content';
 
 interface Props {
-  project: ProjectEntry;
+  project: LocalizedProject;
   /** Destination for the card. Normally a /research/ anchor. */
   href: string;
+  lang: Locale;
   headingLevel?: 'h3' | 'h4';
 }
 
-const { project, href, headingLevel: Heading = 'h3' } = Astro.props;
-const { title, shortTitle, summary, status, tags } = project.data;
+const { project, href, lang, headingLevel: Heading = 'h3' } = Astro.props;
+const t = ui[lang];
+const { title, shortTitle, summary, status, tags } = project;
 const cardTitle = shortTitle ?? title;
+
+const statusLabel =
+  status === 'ongoing' ? t.common.ongoing : status === 'completed' ? t.common.completed : t.common.paused;
 ---
 
 <article class="project-card">
-  {status === 'ongoing' && <p class="status-label">Ongoing</p>}
-  {status === 'completed' && <p class="status-label status-label--muted">Completed</p>}
-  {status === 'paused' && <p class="status-label status-label--muted">Paused</p>}
+  <p class:list={['status-label', { 'status-label--muted': status !== 'ongoing' }]}>
+    {statusLabel}
+  </p>
 
   <Heading class="project-card__title">
     {/*
@@ -32,15 +38,18 @@ const cardTitle = shortTitle ?? title;
   {
     tags.length > 0 && (
       <ul class="tag-list project-card__tags">
+        {/* Keywords stay in English in both versions. */}
         {tags.slice(0, 3).map((tag) => (
-          <li class="tag">{tag}</li>
+          <li class="tag" lang="en">
+            {tag}
+          </li>
         ))}
       </ul>
     )
   }
 
   <p class="project-card__more" aria-hidden="true">
-    Learn more
+    {t.common.learnMore}
     <Icon name="arrow-right" size={16} class="project-card__arrow" />
   </p>
 </article>
@@ -100,6 +109,7 @@ const cardTitle = shortTitle ?? title;
     font-size: var(--text-sm);
     line-height: 1.65;
     color: var(--color-muted-strong);
+    word-break: keep-all;
   }
 
   .project-card__tags {

@@ -1,69 +1,52 @@
 ---
+import LanguageToggle from './LanguageToggle.astro';
 import Logo from './Logo.astro';
-import { baseNav, newsNavItem, type NavItem } from '../data/site';
+import { localeHref, ui, type Locale } from '../data/i18n';
 import { hasNews } from '../utils/content';
 import { isCurrentPath, withBase } from '../utils/paths';
+
+interface Props {
+  lang: Locale;
+  /** Locale-less path of the current page, e.g. "/research/". */
+  path: string;
+}
+
+const { lang, path } = Astro.props;
+const t = ui[lang];
 
 /**
  * The `News` entry only exists once the news collection has a visible entry.
  * Until then there is no nav item, no page and no placeholder anywhere.
  */
-const nav: NavItem[] = (await hasNews())
-  ? [...baseNav.slice(0, 1), newsNavItem, ...baseNav.slice(1)]
-  : [...baseNav];
+const showNews = await hasNews();
+
+const nav = [
+  { label: t.nav.home, href: '/' },
+  ...(showNews ? [{ label: t.nav.news, href: '/news/' }] : []),
+  { label: t.nav.research, href: '/research/' },
+  { label: t.nav.people, href: '/people/' },
+  { label: t.nav.publications, href: '/publications/' },
+  { label: t.nav.join, href: '/join/' },
+  { label: t.nav.contact, href: '/contact/' },
+].map((item) => ({ ...item, localised: localeHref(lang, item.href) }));
 
 const pathname = Astro.url.pathname;
 ---
 
 <header class="site-header">
   <div class="container container--wide site-header__inner">
-    <Logo variant="full" />
+    <Logo variant="full" lang={lang} />
 
-    <nav class="site-nav" aria-label="Main">
-      <ul class="site-nav__list">
-        {
-          nav.map((item) => (
-            <li>
-              <a
-                class="site-nav__link"
-                href={withBase(item.href)}
-                aria-current={isCurrentPath(item.href, pathname) ? 'page' : undefined}
-              >
-                {item.label}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
-
-    <details class="mobile-nav" data-mobile-nav>
-      <summary class="mobile-nav__toggle">
-        <span class="mobile-nav__toggle-label">Menu</span>
-        <svg
-          class="mobile-nav__icon"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.8"
-          stroke-linecap="round"
-          aria-hidden="true"
-          focusable="false"
-        >
-          <path d="M4 7h16M4 12h16M4 17h16"></path>
-        </svg>
-      </summary>
-      <nav class="mobile-nav__panel" aria-label="Main (mobile)">
-        <ul class="mobile-nav__list">
+    <div class="site-header__end">
+      <nav class="site-nav" aria-label={t.common.mainNav}>
+        <ul class="site-nav__list">
           {
             nav.map((item) => (
               <li>
                 <a
-                  class="mobile-nav__link"
-                  href={withBase(item.href)}
-                  aria-current={isCurrentPath(item.href, pathname) ? 'page' : undefined}
+                  class="site-nav__link"
+                  href={withBase(item.localised)}
+                  aria-current={isCurrentPath(item.localised, pathname) ? 'page' : undefined}
                 >
                   {item.label}
                 </a>
@@ -72,7 +55,45 @@ const pathname = Astro.url.pathname;
           }
         </ul>
       </nav>
-    </details>
+
+      <LanguageToggle lang={lang} path={path} />
+
+      <details class="mobile-nav" data-mobile-nav>
+        <summary class="mobile-nav__toggle">
+          <span>{t.common.menu}</span>
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </summary>
+        <nav class="mobile-nav__panel" aria-label={t.common.mobileNav}>
+          <ul class="mobile-nav__list">
+            {
+              nav.map((item) => (
+                <li>
+                  <a
+                    class="mobile-nav__link"
+                    href={withBase(item.localised)}
+                    aria-current={isCurrentPath(item.localised, pathname) ? 'page' : undefined}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </details>
+    </div>
   </div>
 </header>
 
@@ -122,9 +143,15 @@ const pathname = Astro.url.pathname;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-lg);
+    gap: var(--space-md);
     min-height: var(--header-height);
     padding-block: var(--space-sm);
+  }
+
+  .site-header__end {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.75rem, 0.4rem + 0.9vw, 1.25rem);
   }
 
   /* --- Desktop navigation --- */
@@ -132,15 +159,19 @@ const pathname = Astro.url.pathname;
   .site-nav__list {
     display: flex;
     align-items: center;
-    gap: clamp(0.75rem, 0.2rem + 1.4vw, 1.75rem);
+    gap: clamp(0.7rem, 0.2rem + 1.2vw, 1.5rem);
     list-style: none;
     margin: 0;
   }
 
+  /* min-width keeps one-character Korean labels ("홈") above the 24px
+     minimum target size; it has no effect on longer labels. */
   .site-nav__link {
     position: relative;
     display: block;
+    min-width: 1.5rem;
     padding-block: 0.35rem;
+    text-align: center;
     font-family: var(--font-heading);
     font-size: 0.9375rem;
     font-weight: 600;
@@ -246,7 +277,7 @@ const pathname = Astro.url.pathname;
     background: var(--color-primary-soft);
   }
 
-  @media (max-width: 62rem) {
+  @media (max-width: 68rem) {
     .site-nav {
       display: none;
     }

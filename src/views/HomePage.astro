@@ -1,0 +1,248 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroVisual from '../components/HeroVisual.astro';
+import Icon from '../components/Icon.astro';
+import JoinCallout from '../components/JoinCallout.astro';
+import NewsList from '../components/NewsList.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import PublicationList from '../components/PublicationList.astro';
+import ResearchAreas from '../components/ResearchAreas.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { localeHref, ui, type Locale } from '../data/i18n';
+import { site } from '../data/site';
+import { getLocalizedFeaturedProjects, getNews, getPublications } from '../utils/content';
+import { withBase } from '../utils/paths';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+
+const projects = await getLocalizedFeaturedProjects(lang);
+const homePublications = (await getPublications())
+  .filter(({ data }) => data.showOnHome)
+  .slice(0, 4);
+const news = (await getNews()).slice(0, 4);
+
+const researchHref = withBase(localeHref(lang, '/research/'));
+---
+
+<BaseLayout title="Home" description={t.home.metaDescription} lang={lang} path="/" isHome>
+  <!-- Hero -->
+  <section class="section hero">
+    <div class="container container--wide hero__inner">
+      <div class="hero__content">
+        <p class="eyebrow">{site.labName} · {lang === 'ko' ? site.institutionKo : site.institution}</p>
+        {/* The lab name is the headline, and stays in English in both versions. */}
+        <h1 class="hero__title" lang="en">{site.labFullName}</h1>
+        <p class="lead hero__lead">{t.home.heroLead}</p>
+        <div class="button-row hero__actions">
+          <a class="btn btn--primary" href={researchHref}>
+            {t.home.exploreResearch}
+            <Icon name="arrow-right" size={16} />
+          </a>
+          <a class="btn btn--secondary" href={withBase(localeHref(lang, '/join/'))}>
+            {t.home.joinLumi}
+          </a>
+        </div>
+        <p class="hero__recruiting">{t.home.heroRecruiting}</p>
+      </div>
+
+      <div class="hero__visual">
+        <HeroVisual />
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission -->
+  <section class="section section--tight mission">
+    <div class="container">
+      <div class="mission__inner">
+        <h2 class="mission__title">{t.home.missionTitle}</h2>
+        <p class="mission__body">{t.home.missionBody}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ongoing projects -->
+  <section class="section section--surface">
+    <div class="container">
+      <SectionHeading
+        eyebrow={t.home.projectsEyebrow}
+        title={t.home.projectsTitle}
+        description={t.home.projectsIntro}
+      />
+
+      <ul class="project-grid">
+        {
+          projects.map((project) => (
+            <li>
+              <ProjectCard
+                project={project}
+                href={`${researchHref}#${project.anchor}`}
+                lang={lang}
+              />
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="section-footer-link">
+        <a class="arrow-link" href={researchHref}>
+          {t.home.exploreAllResearch}
+          <Icon name="arrow-right" size={16} class="arrow-link__icon" />
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Research focus -->
+  <section class="section section--tint">
+    <div class="container">
+      <SectionHeading
+        eyebrow={t.home.areasEyebrow}
+        title={t.home.areasTitle}
+        description={t.home.areasIntro}
+      />
+      <div class="block-spacer">
+        <ResearchAreas lang={lang} />
+      </div>
+    </div>
+  </section>
+
+  <!-- Selected work by the PI -->
+  <section class="section">
+    <div class="container">
+      <SectionHeading
+        eyebrow={t.home.pubsEyebrow}
+        title={t.home.pubsTitle}
+        description={t.home.pubsIntro}
+      />
+      <div class="block-spacer">
+        <PublicationList publications={homePublications} variant="compact" lang={lang} />
+        <p class="section-footer-link">
+          <a class="arrow-link" href={withBase(localeHref(lang, '/publications/'))}>
+            {t.home.viewAllPublications}
+            <Icon name="arrow-right" size={16} class="arrow-link__icon" />
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {
+    /*
+      News renders only once the collection has a visible entry. Until then the
+      site shows no empty state, no "coming soon" and no navigation item.
+    */
+    news.length > 0 && (
+      <section class="section section--surface">
+        <div class="container">
+          <SectionHeading eyebrow={t.home.newsEyebrow} title={t.home.newsTitle} />
+          <div class="block-spacer">
+            <NewsList news={news} lang={lang} />
+            <p class="section-footer-link">
+              <a class="arrow-link" href={withBase(localeHref(lang, '/news/'))}>
+                {t.home.allNews}
+                <Icon name="arrow-right" size={16} class="arrow-link__icon" />
+              </a>
+            </p>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <JoinCallout lang={lang} />
+</BaseLayout>
+
+<style>
+  /* --- Hero --- */
+
+  .hero {
+    padding-block: clamp(2.5rem, 1.6rem + 3.6vw, 4.5rem);
+  }
+
+  .hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: clamp(2rem, 1rem + 4vw, 4rem);
+    align-items: center;
+  }
+
+  .hero__title {
+    margin-top: var(--space-md);
+    font-size: clamp(2.125rem, 1.55rem + 2.5vw, 3.5rem);
+    line-height: 1.12;
+    letter-spacing: -0.022em;
+    max-width: 24ch;
+  }
+
+  .hero__lead {
+    margin-top: var(--space-lg);
+    max-width: 56ch;
+    word-break: keep-all;
+  }
+
+  .hero__actions {
+    margin-top: var(--space-xl);
+  }
+
+  .hero__recruiting {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-border);
+    max-width: 56ch;
+    font-size: var(--text-sm);
+    color: var(--color-muted-strong);
+    word-break: keep-all;
+  }
+
+  @media (max-width: 60rem) {
+    .hero__inner {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .hero__title {
+      max-width: 22ch;
+    }
+
+    .hero__visual {
+      max-width: 30rem;
+    }
+  }
+
+  /* --- Mission --- */
+
+  .mission__inner {
+    max-width: var(--width-prose);
+    padding-left: clamp(0.9rem, 0.5rem + 1vw, 1.5rem);
+    border-left: 2px solid var(--color-accent);
+  }
+
+  .mission__body {
+    margin-top: var(--space-md);
+    word-break: keep-all;
+  }
+
+  /* --- Shared section pieces --- */
+
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17.5rem), 1fr));
+    gap: var(--space-lg);
+    margin-top: var(--space-xl);
+    list-style: none;
+    padding: 0;
+  }
+
+  .block-spacer {
+    margin-top: var(--space-xl);
+  }
+
+  .section-footer-link {
+    margin-top: var(--space-lg);
+  }
+</style>
