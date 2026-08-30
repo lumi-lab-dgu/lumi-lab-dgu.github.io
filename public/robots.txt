@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+# Replace the host below if the site is deployed to a different origin,
+# for example a custom domain. See README.md → Deploying to GitHub Pages.
+Sitemap: https://lumi-lab-dgu.github.io/sitemap-index.xml

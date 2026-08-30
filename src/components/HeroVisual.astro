@@ -1,0 +1,103 @@
+---
+/**
+ * Abstract hero graphic: signals travelling around a closed loop through a
+ * shared internal representation, rather than a one-way pipeline. Purely
+ * decorative — all meaning is carried by the surrounding copy.
+ */
+---
+
+<div class="hero-visual" aria-hidden="true">
+  <svg viewBox="0 0 480 400" role="presentation" focusable="false">
+    <defs>
+      <linearGradient id="lumi-hero-bg" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#F5F4FC"></stop>
+        <stop offset="100%" stop-color="#FFFFFF"></stop>
+      </linearGradient>
+      <radialGradient id="lumi-hero-glow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#E5A93A" stop-opacity="0.45"></stop>
+        <stop offset="100%" stop-color="#E5A93A" stop-opacity="0"></stop>
+      </radialGradient>
+    </defs>
+
+    <rect x="0.5" y="0.5" width="479" height="399" rx="18" fill="url(#lumi-hero-bg)"></rect>
+    <rect x="0.5" y="0.5" width="479" height="399" rx="18" fill="none" stroke="#E5E7EB"></rect>
+
+    {/* Layer strata — a quiet reference to internal representations. */}
+    <g stroke="#5146B8" stroke-opacity="0.07" stroke-width="1">
+      <path d="M40 128h400M40 200h400M40 272h400"></path>
+    </g>
+
+    {/* The loop: instruction, decision, evaluation, feedback, revision. */}
+    <g fill="none" stroke="#5146B8" stroke-opacity="0.4" stroke-width="1.6">
+      <path d="M240 90 Q316 117 373 166"></path>
+      <path d="M373 166 Q360 231 322 289"></path>
+      <path d="M322 289 Q240 303 158 289"></path>
+      <path d="M158 289 Q120 231 107 166"></path>
+      <path d="M107 166 Q164 117 240 90"></path>
+    </g>
+
+    {/* Spokes into the shared representation at the centre. */}
+    <g stroke="#5146B8" stroke-opacity="0.22" stroke-width="1" stroke-dasharray="3 5">
+      <path d="M240 90V200M373 166 240 200M322 289 240 200M158 289 240 200M107 166 240 200"></path>
+    </g>
+
+    {/* Centre node. */}
+    <circle cx="240" cy="200" r="27" fill="#FFFFFF" stroke="#5146B8" stroke-opacity="0.28"
+    ></circle>
+    <circle cx="240" cy="200" r="15" fill="#332B82"></circle>
+    <circle cx="240" cy="200" r="6" fill="#FFFFFF" fill-opacity="0.9"></circle>
+
+    {/* Perimeter nodes. */}
+    <circle cx="240" cy="90" r="9" fill="#5146B8"></circle>
+    <circle cx="373" cy="166" r="7" fill="#5146B8" fill-opacity="0.75"></circle>
+    <circle cx="158" cy="289" r="7" fill="#5146B8" fill-opacity="0.75"></circle>
+    <circle cx="107" cy="166" r="9" fill="#5146B8"></circle>
+
+    {/* Accent node: the point where a failure is caught and fed back. */}
+    <circle class="hero-visual__halo" cx="322" cy="289" r="30" fill="url(#lumi-hero-glow)"></circle>
+    <circle cx="322" cy="289" r="9" fill="#E5A93A"></circle>
+    <circle cx="322" cy="289" r="3.2" fill="#FFFFFF" fill-opacity="0.95"></circle>
+
+    {/* Direction cues. */}
+    <g fill="#5146B8" fill-opacity="0.45">
+      <path d="m311 124 9 3.6-7.6 5.7z"></path>
+      <path d="m247 297-8.6 4.6-.6-9.5z"></path>
+      <path d="m161 122 1.8 9.4-9.3-2.1z"></path>
+    </g>
+  </svg>
+</div>
+
+<style>
+  .hero-visual {
+    width: 100%;
+  }
+
+  .hero-visual svg {
+    width: 100%;
+    height: auto;
+  }
+
+  .hero-visual__halo {
+    transform-origin: 322px 289px;
+    animation: hero-pulse 5s var(--easing) infinite;
+  }
+
+  @keyframes hero-pulse {
+    0%,
+    100% {
+      opacity: 0.55;
+      transform: scale(0.94);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.06);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-visual__halo {
+      animation: none;
+      opacity: 0.8;
+    }
+  }
+</style>

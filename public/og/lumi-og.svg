@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="LUMI Lab — Language Intelligence and Machine Intelligence, Dongguk University">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#17213A"/>
+      <stop offset="100%" stop-color="#101932"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#E5A93A" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#E5A93A" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Abstract signal loop -->
+  <g transform="translate(920 322) scale(0.92)">
+    <circle r="210" fill="url(#glow)"/>
+    <g fill="none" stroke="#5A6795" stroke-width="2">
+      <path d="M0 -150 Q104 -110 143 -46"/>
+      <path d="M143 -46 Q126 45 88 122"/>
+      <path d="M88 122 Q0 148 -88 122"/>
+      <path d="M-88 122 Q-126 45 -143 -46"/>
+      <path d="M-143 -46 Q-104 -110 0 -150"/>
+    </g>
+    <g stroke="#5A6795" stroke-width="1.5" stroke-dasharray="4 7" opacity="0.7">
+      <path d="M0 -150V0M143 -46 0 0M88 122 0 0M-88 122 0 0M-143 -46 0 0"/>
+    </g>
+    <circle r="34" fill="#17213A" stroke="#5A6795" stroke-width="2"/>
+    <circle r="18" fill="#8F86E8"/>
+    <circle cx="0" cy="-150" r="12" fill="#8F86E8"/>
+    <circle cx="143" cy="-46" r="9" fill="#6F66C9"/>
+    <circle cx="-88" cy="122" r="9" fill="#6F66C9"/>
+    <circle cx="-143" cy="-46" r="12" fill="#8F86E8"/>
+    <circle cx="88" cy="122" r="12" fill="#E5A93A"/>
+  </g>
+
+  <!-- Wordmark -->
+  <g transform="translate(96 196)">
+    <path d="M0 -34c1.9 15.2 13.3 26.6 28.5 28.5v.7C13.3 -2.9 1.9 8.5 0 23.7h-.7C-2.6 8.5 -14 -2.9 -29.2 -4.8v-.7C-14 -7.4 -2.6 -18.8 -.7 -34Z" transform="translate(30 -6)" fill="#E5A93A"/>
+    <text x="80" y="16" font-family="Manrope, Inter, Segoe UI, sans-serif" font-size="132" font-weight="800" letter-spacing="2" fill="#F2F3F7">LUMI</text>
+  </g>
+
+  <text x="96" y="300" font-family="Inter, Segoe UI, sans-serif" font-size="34" font-weight="500" fill="#B9C0D4">Language Intelligence and Machine Intelligence</text>
+
+  <rect x="96" y="344" width="86" height="3" fill="#E5A93A"/>
+
+  <text x="96" y="416" font-family="Manrope, Inter, Segoe UI, sans-serif" font-size="34" font-weight="700" fill="#F2F3F7">Dongguk University</text>
+  <text x="96" y="462" font-family="Inter, Segoe UI, sans-serif" font-size="26" font-weight="400" fill="#8E97B4">Department of Computer Science and Artificial Intelligence</text>
+  <text x="96" y="502" font-family="Inter, Segoe UI, sans-serif" font-size="26" font-weight="400" fill="#8E97B4">Seoul, Republic of Korea</text>
+</svg>

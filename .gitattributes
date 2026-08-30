@@ -1,0 +1,13 @@
+# Normalise text files to LF in the repository. The site is built on Linux in
+# CI, so committing CRLF would produce noisy diffs between machines.
+* text=auto eol=lf
+
+# Binary assets must never be line-ending converted.
+*.woff2 -text
+*.jpg   -text
+*.jpeg  -text
+*.png   -text
+*.webp  -text
+*.avif  -text
+*.pdf   -text
+*.ico   -text

@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { withBase } from '../utils/paths';
+---
+
+<BaseLayout
+  title="Page not found"
+  description="The page you are looking for does not exist or may have moved."
+>
+  <section class="section not-found">
+    <div class="container">
+      <div class="not-found__inner">
+        <p class="eyebrow">404</p>
+        <h1 class="not-found__title">This page wandered off the research path.</h1>
+        <p class="lead not-found__body">
+          The page you’re looking for doesn’t exist or may have moved.
+        </p>
+        <div class="button-row not-found__actions">
+          <a class="btn btn--primary" href={withBase('/')}>
+            Back to LUMI
+            <Icon name="arrow-right" size={16} />
+          </a>
+          <a class="btn btn--secondary" href={withBase('/research/')}>Research</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    padding-block: clamp(3.5rem, 2rem + 6vw, 7rem);
+  }
+
+  .not-found__inner {
+    max-width: var(--width-prose);
+  }
+
+  .not-found__title {
+    margin-top: var(--space-md);
+  }
+
+  .not-found__body {
+    margin-top: var(--space-lg);
+  }
+
+  .not-found__actions {
+    margin-top: var(--space-xl);
+  }
+</style>

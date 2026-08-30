@@ -1,0 +1,106 @@
+---
+import { links, site } from '../data/site';
+import { withBase } from '../utils/paths';
+
+const year = new Date().getFullYear();
+
+const footerLinks = [
+  { label: 'Research', href: withBase('/research/') },
+  { label: 'People', href: withBase('/people/') },
+  { label: 'Publications', href: withBase('/publications/') },
+  { label: 'Join', href: withBase('/join/') },
+  { label: 'Email', href: links.email },
+];
+---
+
+<footer class="site-footer">
+  <div class="container container--wide site-footer__inner">
+    <div class="site-footer__identity">
+      <p class="site-footer__copyright">
+        © {year} {site.labName} · {site.institution}
+      </p>
+      <p class="site-footer__expansion">{site.labExpansion}</p>
+      <p class="site-footer__department">
+        {site.department} · {site.location}
+      </p>
+    </div>
+
+    <nav class="site-footer__nav" aria-label="Footer">
+      <ul class="site-footer__list">
+        {
+          footerLinks.map((item) => (
+            <li>
+              <a class="site-footer__link" href={item.href}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--color-border);
+    background: var(--color-surface);
+    padding-block: var(--space-xl);
+  }
+
+  .site-footer__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-lg);
+  }
+
+  .site-footer__identity {
+    max-width: 46ch;
+  }
+
+  .site-footer__copyright {
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  .site-footer__expansion {
+    margin-top: 0.2rem;
+    font-size: var(--text-sm);
+    color: var(--color-muted-strong);
+  }
+
+  .site-footer__department {
+    margin-top: 0.2rem;
+    font-size: var(--text-xs);
+    color: var(--color-muted);
+  }
+
+  .site-footer__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs) var(--space-md);
+    list-style: none;
+    margin: -0.3rem;
+  }
+
+  /* Padding rather than a bare inline link, so each target clears the 24px
+     minimum without changing how the row looks. */
+  .site-footer__link {
+    display: inline-block;
+    padding: 0.3rem 0.4rem;
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-muted-strong);
+    text-decoration: none;
+  }
+
+  .site-footer__link:hover {
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+  }
+</style>

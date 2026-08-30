@@ -1,0 +1,258 @@
+---
+import Logo from './Logo.astro';
+import { baseNav, newsNavItem, type NavItem } from '../data/site';
+import { hasNews } from '../utils/content';
+import { isCurrentPath, withBase } from '../utils/paths';
+
+/**
+ * The `News` entry only exists once the news collection has a visible entry.
+ * Until then there is no nav item, no page and no placeholder anywhere.
+ */
+const nav: NavItem[] = (await hasNews())
+  ? [...baseNav.slice(0, 1), newsNavItem, ...baseNav.slice(1)]
+  : [...baseNav];
+
+const pathname = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="container container--wide site-header__inner">
+    <Logo variant="full" />
+
+    <nav class="site-nav" aria-label="Main">
+      <ul class="site-nav__list">
+        {
+          nav.map((item) => (
+            <li>
+              <a
+                class="site-nav__link"
+                href={withBase(item.href)}
+                aria-current={isCurrentPath(item.href, pathname) ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <details class="mobile-nav" data-mobile-nav>
+      <summary class="mobile-nav__toggle">
+        <span class="mobile-nav__toggle-label">Menu</span>
+        <svg
+          class="mobile-nav__icon"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path d="M4 7h16M4 12h16M4 17h16"></path>
+        </svg>
+      </summary>
+      <nav class="mobile-nav__panel" aria-label="Main (mobile)">
+        <ul class="mobile-nav__list">
+          {
+            nav.map((item) => (
+              <li>
+                <a
+                  class="mobile-nav__link"
+                  href={withBase(item.href)}
+                  aria-current={isCurrentPath(item.href, pathname) ? 'page' : undefined}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<script>
+  // Progressive enhancement for the native <details> menu: Escape closes it and
+  // returns focus to the toggle, and a click outside dismisses it. Without JS
+  // the menu still opens, closes and is keyboard operable.
+  const menu = document.querySelector<HTMLDetailsElement>('[data-mobile-nav]');
+
+  if (menu) {
+    const toggle = menu.querySelector('summary');
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && menu.open) {
+        menu.open = false;
+        toggle?.focus();
+      }
+    });
+
+    document.addEventListener('click', (event) => {
+      if (menu.open && event.target instanceof Node && !menu.contains(event.target)) {
+        menu.open = false;
+      }
+    });
+  }
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    /* Opaque enough that scrolled text does not ghost through the bar. */
+    background-color: color-mix(in srgb, var(--color-bg) 95%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  /* Browsers without backdrop-filter get a solid bar rather than a see-through one. */
+  @supports not (backdrop-filter: blur(8px)) {
+    .site-header {
+      background-color: var(--color-bg);
+    }
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-lg);
+    min-height: var(--header-height);
+    padding-block: var(--space-sm);
+  }
+
+  /* --- Desktop navigation --- */
+
+  .site-nav__list {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.75rem, 0.2rem + 1.4vw, 1.75rem);
+    list-style: none;
+    margin: 0;
+  }
+
+  .site-nav__link {
+    position: relative;
+    display: block;
+    padding-block: 0.35rem;
+    font-family: var(--font-heading);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-muted-strong);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color var(--duration) var(--easing);
+  }
+
+  .site-nav__link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.15rem;
+    height: 2px;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--duration) var(--easing);
+  }
+
+  .site-nav__link:hover {
+    color: var(--color-text);
+  }
+
+  .site-nav__link:hover::after,
+  .site-nav__link[aria-current='page']::after {
+    transform: scaleX(1);
+  }
+
+  .site-nav__link[aria-current='page'] {
+    color: var(--color-primary-dark);
+  }
+
+  /* --- Mobile navigation --- */
+
+  .mobile-nav {
+    display: none;
+    position: relative;
+  }
+
+  .mobile-nav__toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--color-border-control);
+    border-radius: var(--radius-md);
+    font-family: var(--font-heading);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--color-text);
+    cursor: pointer;
+    list-style: none;
+    white-space: nowrap;
+  }
+
+  .mobile-nav__toggle::-webkit-details-marker {
+    display: none;
+  }
+
+  .mobile-nav[open] .mobile-nav__toggle {
+    border-color: var(--color-primary);
+    color: var(--color-primary-dark);
+  }
+
+  .mobile-nav__panel {
+    position: absolute;
+    top: calc(100% + 0.6rem);
+    right: 0;
+    min-width: 12rem;
+    padding: var(--space-xs);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-md);
+  }
+
+  .mobile-nav__list {
+    list-style: none;
+    margin: 0;
+  }
+
+  .mobile-nav__link {
+    display: block;
+    padding: 0.6rem 0.75rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .mobile-nav__link:hover {
+    background: var(--color-tint);
+    color: var(--color-primary-dark);
+  }
+
+  .mobile-nav__link[aria-current='page'] {
+    color: var(--color-primary-dark);
+    background: var(--color-primary-soft);
+  }
+
+  @media (max-width: 62rem) {
+    .site-nav {
+      display: none;
+    }
+
+    .mobile-nav {
+      display: block;
+    }
+  }
+</style>

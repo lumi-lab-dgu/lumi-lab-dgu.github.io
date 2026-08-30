@@ -1,0 +1,85 @@
+---
+import { researchAreas } from '../data/research';
+
+interface Props {
+  headingLevel?: 'h3' | 'h4';
+}
+
+const { headingLevel: Heading = 'h3' } = Astro.props;
+---
+
+<ul class="research-areas">
+  {
+    researchAreas.map((area) => (
+      <li class="research-area" id={area.id}>
+        <Heading class="research-area__title">{area.title}</Heading>
+        <p class="research-area__description">{area.description}</p>
+        <ul class="tag-list research-area__keywords">
+          {area.keywords.map((keyword) => (
+            <li class="tag">{keyword}</li>
+          ))}
+        </ul>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  /* Deliberately 2×2 rather than auto-fit: four areas in a three-column grid
+     would leave a conspicuous empty cell. */
+  .research-areas {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-border);
+    overflow: hidden;
+  }
+
+  .research-area {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding: clamp(1.25rem, 0.9rem + 1.2vw, 2rem);
+    background: var(--color-surface);
+    scroll-margin-top: calc(var(--header-height) + var(--space-lg));
+  }
+
+  .research-area__title {
+    position: relative;
+    padding-left: 1rem;
+  }
+
+  /* A small light point instead of an illustrative icon. */
+  .research-area__title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-accent);
+  }
+
+  .research-area__description {
+    font-size: var(--text-sm);
+    line-height: 1.65;
+    color: var(--color-muted-strong);
+  }
+
+  .research-area__keywords {
+    margin-top: auto;
+    padding-top: var(--space-xs);
+  }
+
+  @media (max-width: 44rem) {
+    .research-areas {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

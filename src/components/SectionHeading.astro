@@ -1,0 +1,49 @@
+---
+export interface Props {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  align?: 'start' | 'center';
+  /** Heading level. Sections inside a page normally stay at h2. */
+  as?: 'h1' | 'h2' | 'h3';
+  id?: string;
+}
+
+const { eyebrow, title, description, align = 'start', as: Tag = 'h2', id } = Astro.props;
+---
+
+<div class:list={['section-heading', `section-heading--${align}`]}>
+  {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+  <Tag class="section-heading__title" id={id}>{title}</Tag>
+  {description && <p class="section-heading__description">{description}</p>}
+</div>
+
+<style>
+  .section-heading {
+    max-width: var(--width-prose);
+  }
+
+  .section-heading--center {
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .section-heading--center .eyebrow {
+    justify-content: center;
+  }
+
+  .section-heading__title {
+    margin-top: var(--space-sm);
+  }
+
+  .section-heading__description {
+    margin-top: var(--space-md);
+    font-size: var(--text-lead);
+    line-height: 1.6;
+    color: var(--color-muted-strong);
+  }
+
+  :global(.section--dark) .section-heading__description {
+    color: var(--color-on-dark-muted);
+  }
+</style>

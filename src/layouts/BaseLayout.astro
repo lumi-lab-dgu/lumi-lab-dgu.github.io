@@ -1,0 +1,43 @@
+---
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import Seo from '../components/Seo.astro';
+import { withBase } from '../utils/paths';
+import '../styles/global.css';
+
+// The latin subsets render all visible headings and body copy, so they are
+// preloaded rather than waiting to be discovered inside the stylesheet.
+// `?url` keeps the hashed, base-path-aware filename Vite emits.
+import interLatin from '../fonts/inter-latin.woff2?url';
+import manropeLatin from '../fonts/manrope-latin.woff2?url';
+
+interface Props {
+  title: string;
+  description: string;
+  isHome?: boolean;
+}
+
+const { title, description, isHome = false } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
+    <link rel="preload" href={manropeLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="sitemap" href={withBase('/sitemap-index.xml')} />
+    <Seo title={title} description={description} isHome={isHome} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

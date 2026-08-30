@@ -1,0 +1,88 @@
+---
+import { links, site } from '../data/site';
+import { withBase } from '../utils/paths';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Set on the home page so the title is not suffixed with the lab name. */
+  isHome?: boolean;
+}
+
+const { title, description, isHome = false } = Astro.props;
+
+const pageTitle = isHome ? site.defaultTitle : site.titleTemplate.replace('%s', title);
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(withBase(site.ogImage), Astro.site).href;
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'ResearchOrganization',
+      '@id': `${new URL(withBase('/'), Astro.site).href}#organization`,
+      name: site.labName,
+      alternateName: site.labFullName,
+      description: site.defaultDescription,
+      url: new URL(withBase('/'), Astro.site).href,
+      email: site.email,
+      parentOrganization: {
+        '@type': 'CollegeOrUniversity',
+        name: site.institution,
+      },
+      department: {
+        '@type': 'Organization',
+        name: site.department,
+      },
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: '30, Pildong-ro 1-gil',
+        addressLocality: 'Jung-gu, Seoul',
+        postalCode: '04620',
+        addressCountry: 'KR',
+      },
+      member: { '@id': `${new URL(withBase('/people/'), Astro.site).href}#yerin-hwang` },
+    },
+    {
+      '@type': 'Person',
+      '@id': `${new URL(withBase('/people/'), Astro.site).href}#yerin-hwang`,
+      name: site.piName,
+      alternateName: site.piNameKo,
+      jobTitle: site.piTitle,
+      email: site.email,
+      url: links.piWebsite,
+      affiliation: {
+        '@type': 'CollegeOrUniversity',
+        name: site.institution,
+      },
+      worksFor: { '@id': `${new URL(withBase('/'), Astro.site).href}#organization` },
+      sameAs: [links.piWebsite, links.scholar, links.github, links.linkedin, links.openreview],
+    },
+  ],
+};
+---
+
+<title>{pageTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={site.labFullName} />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta
+  property="og:image:alt"
+  content={`${site.labName} — ${site.labExpansion}, ${site.institution}`}
+/>
+<meta property="og:locale" content="en_US" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={pageTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+<script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />

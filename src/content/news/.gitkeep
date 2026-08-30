@@ -1,0 +1,17 @@
+# The news collection is intentionally empty.
+#
+# While no visible news entry exists, the site renders no news section, no
+# /news/ page and no navigation item — not even a placeholder.
+#
+# Adding a Markdown file here, for example 2026-09-01-first-paper.md with:
+#
+#   ---
+#   date: 2026-09-01
+#   title: Paper accepted at ACL 2027
+#   summary: Optional one-line context.
+#   url: https://example.org/paper
+#   visible: true
+#   ---
+#
+# makes the home-page section, the /news/ page and the nav link appear
+# automatically. See README.md for details.

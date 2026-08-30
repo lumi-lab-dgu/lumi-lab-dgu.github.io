@@ -1,0 +1,54 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NewsList from '../../components/NewsList.astro';
+import { getNews } from '../../utils/content';
+
+/**
+ * The news index is a dynamic route on purpose: when the collection has no
+ * visible entries, `getStaticPaths` returns nothing and the page is not built
+ * at all. That keeps the promise that an empty lab shows no empty pages.
+ */
+export const getStaticPaths: GetStaticPaths = async () => {
+  const news = await getNews();
+  return news.length > 0 ? [{ params: { slug: undefined } }] : [];
+};
+
+const news = await getNews();
+---
+
+<BaseLayout
+  title="News"
+  description="Recent news from LUMI Lab at Dongguk University."
+>
+  <section class="section page-intro">
+    <div class="container">
+      <div class="page-intro__inner">
+        <p class="eyebrow">News</p>
+        <h1 class="page-intro__title">News</h1>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight section--surface">
+    <div class="container">
+      <div class="news-wrapper">
+        <NewsList news={news} headingLevel="h2" />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-intro__inner {
+    max-width: var(--width-prose);
+  }
+
+  .page-intro__title {
+    margin-top: var(--space-md);
+  }
+
+  .news-wrapper {
+    max-width: var(--width-prose);
+  }
+</style>

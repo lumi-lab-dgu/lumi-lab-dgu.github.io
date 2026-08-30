@@ -1,0 +1,66 @@
+---
+import Icon from './Icon.astro';
+import SectionHeading from './SectionHeading.astro';
+import { withBase } from '../utils/paths';
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  body?: string;
+  primaryLabel?: string;
+  primaryHref?: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+}
+
+const {
+  eyebrow = 'Join LUMI',
+  title = 'We are building a new research group.',
+  body = 'We welcome students and collaborators who want to study trustworthy AI through careful experiments, strong evaluations, and questions that matter beyond benchmark scores.',
+  primaryLabel = 'Research opportunities',
+  primaryHref = withBase('/join/'),
+  secondaryLabel = 'Contact us',
+  secondaryHref = withBase('/contact/'),
+} = Astro.props;
+---
+
+<section class="section section--dark join-callout">
+  <div class="container join-callout__inner">
+    <SectionHeading eyebrow={eyebrow} title={title} description={body} />
+    <div class="button-row join-callout__actions">
+      <a class="btn btn--on-dark" href={primaryHref}>
+        {primaryLabel}
+        <Icon name="arrow-right" size={16} />
+      </a>
+      <a class="btn btn--ghost-on-dark" href={secondaryHref}>{secondaryLabel}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .join-callout {
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* A single quiet light detail rather than a decorative background. */
+  .join-callout::before {
+    content: '';
+    position: absolute;
+    top: -6rem;
+    right: -4rem;
+    width: 22rem;
+    height: 22rem;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(229, 169, 58, 0.16) 0%, rgba(229, 169, 58, 0) 68%);
+    pointer-events: none;
+  }
+
+  .join-callout__inner {
+    position: relative;
+  }
+
+  .join-callout__actions {
+    margin-top: var(--space-xl);
+  }
+</style>

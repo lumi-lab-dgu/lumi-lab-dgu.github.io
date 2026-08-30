@@ -1,0 +1,127 @@
+---
+import Icon from './Icon.astro';
+import type { ProjectEntry } from '../utils/content';
+
+interface Props {
+  project: ProjectEntry;
+  /** Destination for the card. Normally a /research/ anchor. */
+  href: string;
+  headingLevel?: 'h3' | 'h4';
+}
+
+const { project, href, headingLevel: Heading = 'h3' } = Astro.props;
+const { title, shortTitle, summary, status, tags } = project.data;
+const cardTitle = shortTitle ?? title;
+---
+
+<article class="project-card">
+  {status === 'ongoing' && <p class="status-label">Ongoing</p>}
+  {status === 'completed' && <p class="status-label status-label--muted">Completed</p>}
+  {status === 'paused' && <p class="status-label status-label--muted">Paused</p>}
+
+  <Heading class="project-card__title">
+    {/*
+      The title link is stretched over the whole card, so the card is one
+      clickable target with a single, meaningful accessible name.
+    */}
+    <a class="project-card__link" href={href}>{cardTitle}</a>
+  </Heading>
+
+  <p class="project-card__summary">{summary}</p>
+
+  {
+    tags.length > 0 && (
+      <ul class="tag-list project-card__tags">
+        {tags.slice(0, 3).map((tag) => (
+          <li class="tag">{tag}</li>
+        ))}
+      </ul>
+    )
+  }
+
+  <p class="project-card__more" aria-hidden="true">
+    Learn more
+    <Icon name="arrow-right" size={16} class="project-card__arrow" />
+  </p>
+</article>
+
+<style>
+  .project-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    height: 100%;
+    padding: var(--space-lg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    transition:
+      border-color var(--duration) var(--easing),
+      transform var(--duration) var(--easing),
+      box-shadow var(--duration) var(--easing);
+  }
+
+  .project-card:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .project-card:has(.project-card__link:focus-visible) {
+    border-color: var(--color-primary);
+  }
+
+  .status-label--muted::before {
+    background: var(--color-border-strong);
+  }
+
+  .project-card__title {
+    margin: 0;
+  }
+
+  .project-card__link {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .project-card__link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-lg);
+  }
+
+  .project-card:hover .project-card__link {
+    color: var(--color-primary-dark);
+  }
+
+  .project-card__summary {
+    font-size: var(--text-sm);
+    line-height: 1.65;
+    color: var(--color-muted-strong);
+  }
+
+  .project-card__tags {
+    margin-top: auto;
+    padding-top: var(--space-xs);
+  }
+
+  .project-card__more {
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--color-primary);
+  }
+
+  .project-card__arrow {
+    transition: transform var(--duration) var(--easing);
+  }
+
+  .project-card:hover .project-card__arrow {
+    transform: translateX(3px);
+  }
+</style>

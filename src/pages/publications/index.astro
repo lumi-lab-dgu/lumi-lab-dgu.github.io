@@ -1,0 +1,118 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PublicationList from '../../components/PublicationList.astro';
+import { site } from '../../data/site';
+import { getPublications, groupPublicationsByYear } from '../../utils/content';
+
+const publications = await getPublications();
+const years = groupPublicationsByYear(publications).map((group) => group.year);
+
+/** The footnote only appears when some author is actually marked with "*". */
+const hasEqualContribution = publications.some((publication) =>
+  publication.data.authors.some((author) => author.includes('*')),
+);
+const equalContributionNote =
+  publications.find((publication) => publication.data.equalContributionNote)?.data
+    .equalContributionNote ?? '* Equal contribution.';
+---
+
+<BaseLayout
+  title="Publications"
+  description={`Selected publications and prior work by Prof. ${site.piName}, covering LLM-as-a-Judge evaluation, instruction following, multimodal evaluation, and AI safety.`}
+>
+  <section class="section page-intro">
+    <div class="container">
+      <div class="page-intro__inner">
+        <p class="eyebrow">Publications</p>
+        <h1 class="page-intro__title">Selected Publications and Prior Work</h1>
+        <p class="lead page-intro__lead">
+          This page currently highlights selected publications by the PI. Work produced
+          after the launch of LUMI Lab will be marked separately as LUMI Lab research.
+        </p>
+        {
+          years.length > 1 && (
+            <nav class="year-nav" aria-label="Jump to year">
+              <ul class="year-nav__list">
+                {years.map((year) => (
+                  <li>
+                    <a class="year-nav__link" href={`#year-${year}`}>
+                      {year}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight section--surface">
+    <div class="container">
+      <PublicationList publications={publications} variant="full" />
+      {
+        hasEqualContribution && (
+          <p class="footnote">
+            <span aria-hidden="true">{equalContributionNote}</span>
+            <span class="visually-hidden">
+              An asterisk after an author name indicates equal contribution.
+            </span>
+          </p>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-intro__inner {
+    max-width: var(--width-prose);
+  }
+
+  .page-intro__title {
+    margin-top: var(--space-md);
+  }
+
+  .page-intro__lead {
+    margin-top: var(--space-lg);
+  }
+
+  .year-nav {
+    margin-top: var(--space-lg);
+  }
+
+  .year-nav__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .year-nav__link {
+    display: inline-block;
+    padding: 0.3rem 0.75rem;
+    border: 1px solid var(--color-border-control);
+    border-radius: 999px;
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-muted-strong);
+    text-decoration: none;
+  }
+
+  .year-nav__link:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary-dark);
+  }
+
+  .footnote {
+    margin-top: var(--space-xl);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-border);
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+  }
+</style>

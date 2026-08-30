@@ -1,0 +1,74 @@
+---
+import Icon, { type IconName } from './Icon.astro';
+
+export interface SocialLink {
+  label: string;
+  href: string;
+  icon: IconName;
+}
+
+interface Props {
+  links: SocialLink[];
+  /** Accessible name for the list of links. */
+  label: string;
+  size?: 'md' | 'sm';
+}
+
+const { links, label, size = 'md' } = Astro.props;
+---
+
+{
+  links.length > 0 && (
+    <nav aria-label={label}>
+      <ul class:list={['social-links', `social-links--${size}`]}>
+        {links.map((link) => (
+          <li>
+            <a class="social-links__item" href={link.href}>
+              <Icon name={link.icon} size={size === 'sm' ? 15 : 17} />
+              <span>{link.label}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
+
+<style>
+  .social-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .social-links__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    padding: 0.4rem 0.75rem;
+    border: 1px solid var(--color-border-control);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-muted-strong);
+    text-decoration: none;
+    transition:
+      border-color var(--duration) var(--easing),
+      color var(--duration) var(--easing);
+  }
+
+  .social-links--sm .social-links__item {
+    padding: 0.3rem 0.6rem;
+    font-size: var(--text-xs);
+  }
+
+  .social-links__item:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary-dark);
+  }
+</style>

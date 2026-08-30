@@ -1,0 +1,265 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+import ResearchAreas from '../../components/ResearchAreas.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import { links, site } from '../../data/site';
+import { researchPrinciples } from '../../data/research';
+import { getProjects } from '../../utils/content';
+import { withBase } from '../../utils/paths';
+
+const projects = await getProjects();
+
+const projectSections = await Promise.all(
+  projects.map(async (project) => ({
+    project,
+    anchor: project.data.anchor ?? project.id,
+    Content: (await render(project)).Content,
+  })),
+);
+
+const ongoing = projectSections.filter(({ project }) => project.data.status === 'ongoing');
+const other = projectSections.filter(({ project }) => project.data.status !== 'ongoing');
+---
+
+<BaseLayout
+  title="Research"
+  description="LUMI Lab studies reliability in language and multimodal AI: trustworthy evaluation, reliable agents, feedback and correction, and data-centric Korean NLP."
+>
+  <!-- Intro -->
+  <section class="section page-intro">
+    <div class="container">
+      <div class="page-intro__inner">
+        <p class="eyebrow">What we study</p>
+        <h1 class="page-intro__title">Reliable AI under conflict, uncertainty, and feedback</h1>
+        <p class="lead page-intro__lead">
+          Powerful models often look reliable in clean, single-turn tests and fail when
+          objectives conflict, evaluation signals are biased, tools carry different costs,
+          or an earlier output must be repaired. Our research turns these pressure points
+          into measurable questions and uses controlled experiments to understand both
+          observable behavior and the mechanisms behind it.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Four research areas -->
+  <section class="section section--surface">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Research Areas"
+        title="Four directions"
+        description="Each area asks where a capability that looks solid in aggregate breaks down under a more demanding setting."
+      />
+      <div class="block-spacer">
+        <ResearchAreas headingLevel="h3" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Ongoing projects, in detail -->
+  <section class="section">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Ongoing Projects"
+        title="What we are working on now"
+        description="Three projects currently drive most of the lab's experimental work."
+      />
+
+      <div class="projects">
+        {
+          ongoing.map(({ project, anchor, Content }) => (
+            <article class="project-detail" id={anchor}>
+              <div class="project-detail__head">
+                <p class="status-label">Ongoing</p>
+                <h3 class="project-detail__title">{project.data.title}</h3>
+                {project.data.tags.length > 0 && (
+                  <ul class="tag-list project-detail__tags">
+                    {project.data.tags.map((tag) => (
+                      <li class="tag">{tag}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+              <div class="project-detail__body">
+                <Content />
+                {project.data.externalUrl && (
+                  <p>
+                    <a class="arrow-link" href={project.data.externalUrl}>
+                      Project page
+                      <Icon name="arrow-up-right" size={16} class="arrow-link__icon" />
+                    </a>
+                  </p>
+                )}
+              </div>
+            </article>
+          ))
+        }
+
+        {
+          other.map(({ project, anchor, Content }) => (
+            <article class="project-detail" id={anchor}>
+              <div class="project-detail__head">
+                <p class="status-label status-label--muted">
+                  {project.data.status === 'completed' ? 'Completed' : 'Paused'}
+                </p>
+                <h3 class="project-detail__title">{project.data.title}</h3>
+                {project.data.tags.length > 0 && (
+                  <ul class="tag-list project-detail__tags">
+                    {project.data.tags.map((tag) => (
+                      <li class="tag">{tag}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+              <div class="project-detail__body">
+                <Content />
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- How we work -->
+  <section class="section section--tint">
+    <div class="container">
+      <SectionHeading eyebrow="Methodology" title="How we work" />
+      <div class="how-we-work">
+        <p class="how-we-work__body">
+          We combine benchmark design, behavioral evaluation, human and model-based
+          analysis, controlled interventions, and mechanistic tools. Across projects, we
+          aim to separate capabilities that are often conflated—for example, recognizing
+          an error versus correcting it, representing an instruction priority versus
+          acting on it, or understanding a task versus matching its surface wording.
+        </p>
+
+        <ul class="principles">
+          {
+            researchPrinciples.map((principle) => (
+              <li class="principle">
+                <h3 class="principle__title">{principle.title}</h3>
+                <p class="principle__description">{principle.description}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Collaboration -->
+  <section class="section section--surface">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Collaboration"
+        title="Work with us"
+        description="We are open to academic and industry collaboration on evaluation, agent reliability, and AI safety, and to students who want to take on these questions with us."
+      />
+      <div class="button-row block-spacer">
+        <a class="btn btn--primary" href={withBase('/join/')}>
+          Research opportunities
+          <Icon name="arrow-right" size={16} />
+        </a>
+        <a class="btn btn--secondary" href={links.email}>
+          Email Prof. {site.piName}
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-intro__inner {
+    max-width: var(--width-prose);
+  }
+
+  .page-intro__title {
+    margin-top: var(--space-md);
+  }
+
+  .page-intro__lead {
+    margin-top: var(--space-lg);
+  }
+
+  .block-spacer {
+    margin-top: var(--space-xl);
+  }
+
+  /* --- Project details --- */
+
+  .projects {
+    margin-top: var(--space-xl);
+  }
+
+  .project-detail {
+    display: grid;
+    grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
+    gap: clamp(1.5rem, 0.8rem + 2.8vw, 3.5rem);
+    padding-block: clamp(1.75rem, 1.2rem + 2vw, 2.75rem);
+    scroll-margin-top: calc(var(--header-height) + var(--space-lg));
+  }
+
+  .project-detail + .project-detail {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .project-detail__title {
+    margin-top: var(--space-sm);
+    font-size: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
+  }
+
+  .project-detail__tags {
+    margin-top: var(--space-md);
+  }
+
+  .project-detail__body {
+    max-width: 68ch;
+  }
+
+  .project-detail__body :global(p + p) {
+    margin-top: var(--space-md);
+  }
+
+  @media (max-width: 56rem) {
+    .project-detail {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  /* --- How we work --- */
+
+  .how-we-work {
+    margin-top: var(--space-xl);
+  }
+
+  .how-we-work__body {
+    max-width: 72ch;
+  }
+
+  .principles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: var(--space-lg);
+    margin-top: var(--space-xl);
+    list-style: none;
+    padding: 0;
+  }
+
+  .principle {
+    padding-top: var(--space-md);
+    border-top: 2px solid var(--color-primary);
+  }
+
+  .principle__title {
+    font-size: 1.0625rem;
+  }
+
+  .principle__description {
+    margin-top: var(--space-xs);
+    font-size: var(--text-sm);
+    color: var(--color-muted-strong);
+  }
+</style>
