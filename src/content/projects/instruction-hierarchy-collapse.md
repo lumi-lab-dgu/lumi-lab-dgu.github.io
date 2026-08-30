@@ -9,7 +9,7 @@ tags:
   - AI Safety
   - Instruction Following
   - Model Behavior
-order: 3
+order: 2
 featured: true
 visible: true
 anchor: instruction-hierarchy

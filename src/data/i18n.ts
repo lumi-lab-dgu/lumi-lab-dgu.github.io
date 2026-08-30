@@ -79,7 +79,7 @@ export const ui = {
       projectsEyebrow: 'Ongoing Projects',
       projectsTitle: 'What we are working on',
       projectsIntro:
-        'Capable systems still fall short in real use. Right now we focus on three of those gaps: recovering from a bad result, weighing cost against capability, and keeping priorities straight under conflict.',
+        'Capable systems still fall short in real use. Right now we focus on three of those gaps: weighing cost against capability, keeping priorities straight under conflict, and recovering from a result that missed.',
       exploreAllResearch: 'Explore all research',
       areasEyebrow: 'Research Areas',
       areasTitle: 'From evaluation to reliable action',
@@ -178,17 +178,14 @@ export const ui = {
       ],
       emailEyebrow: 'Getting in touch',
       emailTitle: 'Writing your first email',
-      emailIntro:
-        'There is no required format, and it does not need to be long — a few sentences are plenty. Three things are useful to know:',
+      emailIntro: 'There is no required format. Three things are useful to know:',
       checklist: [
-        'who you are, in a sentence or two',
+        'a short introduction',
         'what you would like to work on, and what draws you to it',
-        'your CV, if you have one ready',
+        'your CV',
       ],
       transcriptNote:
-        'Anything else is welcome but not expected: transcripts, code samples, a start date, links to past work. If you are unsure whether your background fits, write anyway — that is a good question to ask.',
-      subjectLabel: 'A subject line like this helps, but is not required',
-      subjectValue: '[LUMI Inquiry] Name — Graduate / Undergraduate Intern / Collaboration',
+        'Transcripts, code samples, a start date and links to past work are all welcome, though none are expected. If you are unsure whether your background fits, write anyway.',
       disclaimer:
         'An inquiry does not constitute an admission or appointment offer. Formal university admission requirements and timelines apply separately.',
       faqEyebrow: 'FAQ',
@@ -274,7 +271,7 @@ export const ui = {
       projectsEyebrow: '진행 중인 연구',
       projectsTitle: '지금 다루고 있는 문제',
       projectsIntro:
-        '성능이 좋은 시스템도 실제 환경에서는 부족한 부분이 남습니다. 지금은 세 가지를 다루고 있습니다. 잘못된 결과에서 회복하는 능력, 기능과 비용을 함께 따지는 판단, 그리고 지시가 충돌할 때 우선순위를 지키는 일입니다.',
+        '성능이 좋은 시스템도 실제 환경에서는 부족한 부분이 남습니다. 지금은 세 가지를 다루고 있습니다. 기능과 비용을 함께 따지는 판단, 지시가 충돌할 때 우선순위를 지키는 일, 그리고 어긋난 결과에서 회복하는 능력입니다.',
       exploreAllResearch: '연구 전체 보기',
       areasEyebrow: '연구 분야',
       areasTitle: '평가부터 실제 동작까지',
@@ -372,17 +369,14 @@ export const ui = {
       ],
       emailEyebrow: '문의 방법',
       emailTitle: '첫 메일 쓰기',
-      emailIntro:
-        '정해진 형식은 없습니다. 길게 쓰지 않으셔도 되고 몇 문장이면 충분합니다. 아래 세 가지만 알려주시면 좋습니다.',
+      emailIntro: '정해진 형식은 없습니다. 아래 세 가지만 알려주시면 됩니다.',
       checklist: [
-        '어떤 분인지 (한두 문장이면 충분합니다)',
+        '간단한 자기소개',
         '어떤 연구를 해보고 싶은지, 왜 관심이 생겼는지',
-        'CV (준비되어 있다면)',
+        'CV',
       ],
       transcriptNote:
-        '성적증명서나 코드 샘플, 시작 가능 시기, 이전 작업 링크 같은 것은 있으면 좋지만 꼭 필요하지는 않습니다. 본인 배경이 맞을지 확신이 없어도 일단 연락 주세요. 그것부터 함께 이야기하면 됩니다.',
-      subjectLabel: '메일 제목은 이런 식이면 좋습니다 (필수는 아닙니다)',
-      subjectValue: '[LUMI Inquiry] 이름 — 대학원 / 학부 인턴 / 공동 연구',
+        '성적증명서나 코드 샘플, 시작 가능 시기, 이전 작업 링크도 있으면 함께 보내주세요. 본인 배경이 맞을지 확신이 없어도 편하게 연락 주셔도 됩니다.',
       disclaimer:
         '문의가 곧 입학이나 임용을 보장하지는 않습니다. 대학의 공식 입학 요건과 일정은 별도로 적용됩니다.',
       faqEyebrow: '자주 묻는 질문',

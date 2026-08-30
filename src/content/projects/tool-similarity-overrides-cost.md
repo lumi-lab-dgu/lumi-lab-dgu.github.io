@@ -9,7 +9,7 @@ tags:
   - LLM Agents
   - Tool Use
   - Cost-Aware Reasoning
-order: 2
+order: 1
 featured: true
 visible: true
 anchor: tool-cost

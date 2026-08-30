@@ -9,7 +9,7 @@ tags:
   - Multimodal Evaluation
   - Image Editing
   - Feedback
-order: 1
+order: 3
 featured: true
 visible: true
 anchor: image-feedback
