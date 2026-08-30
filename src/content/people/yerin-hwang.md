@@ -9,19 +9,17 @@ bioShort: >-
   evaluators, instruction followers, and agents, and how those failures can be
   measured and reduced. She received her Ph.D. in the Interdisciplinary Program
   in Artificial Intelligence and her B.S. in Electrical & Computer Engineering
-  from Seoul National University. Her research interests include trustworthy
-  LLMs, LLM-as-a-Judge, agent reliability, AI safety, multimodal evaluation,
-  automatic data generation, and Korean NLP.
+  from Seoul National University. Her research interests include large language
+  models, LLM agents, evaluation, trustworthy AI, multimodal systems, and
+  Korean NLP.
 interests:
-  - Trustworthy language models
-  - LLM evaluation
-  - LLM-as-a-Judge
-  - Robustness and bias
-  - Reliable AI agents
-  - Instruction following
-  - AI safety
-  - Multimodal evaluation
-  - Automatic data generation
+  - Natural Language Processing
+  - Large Language Models
+  - LLM Agents
+  - LLM Evaluation
+  - Trustworthy AI
+  - AI Safety
+  - Multimodal AI
   - Korean NLP
 email: yerinhwang@dongguk.edu
 website: https://yerin-hwang49.github.io/
