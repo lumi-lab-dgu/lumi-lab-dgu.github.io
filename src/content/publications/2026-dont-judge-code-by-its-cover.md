@@ -16,5 +16,5 @@ paperUrl: https://aclanthology.org/2026.findings-eacl.70/
 selected: true
 showOnHome: false
 labEra: pre-lumi
-order: 2
+order: 3
 ---

@@ -118,6 +118,9 @@ const news = defineCollection({
     date: z.coerce.date(),
     title: z.string(),
     summary: z.string().optional(),
+    /** Korean text. Falls back to the English fields when absent. */
+    titleKo: z.string().optional(),
+    summaryKo: z.string().optional(),
     url: z.url().optional(),
     visible: z.boolean().default(true),
   }),

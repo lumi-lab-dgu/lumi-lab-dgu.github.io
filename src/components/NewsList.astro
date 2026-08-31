@@ -21,7 +21,12 @@ const dateFormatter = new Intl.DateTimeFormat(lang === 'ko' ? 'ko-KR' : 'en-GB',
 
 <ol class="news-list">
   {
-    news.map((item) => (
+    news.map((item) => {
+      // Korean fields fall back to English, so an untranslated item still reads.
+      const isKo = lang === 'ko';
+      const title = (isKo && item.data.titleKo) || item.data.title;
+      const summary = (isKo && item.data.summaryKo) || item.data.summary;
+      return (
       <li class="news-item">
         <time class="news-item__date" datetime={item.data.date.toISOString().slice(0, 10)}>
           {dateFormatter.format(item.data.date)}
@@ -30,17 +35,18 @@ const dateFormatter = new Intl.DateTimeFormat(lang === 'ko' ? 'ko-KR' : 'en-GB',
           <Heading class="news-item__title">
             {item.data.url ? (
               <a class="news-item__link" href={item.data.url}>
-                {item.data.title}
+                {title}
                 <Icon name="arrow-up-right" size={14} />
               </a>
             ) : (
-              item.data.title
+              title
             )}
           </Heading>
-          {item.data.summary && <p class="news-item__summary">{item.data.summary}</p>}
+          {summary && <p class="news-item__summary">{summary}</p>}
         </div>
       </li>
-    ))
+      );
+    })
   }
 </ol>
 
