@@ -117,10 +117,8 @@ const news = defineCollection({
   schema: z.object({
     date: z.coerce.date(),
     title: z.string(),
+    /** Written in English and shown as-is on both versions, like publications. */
     summary: z.string().optional(),
-    /** Korean text. Falls back to the English fields when absent. */
-    titleKo: z.string().optional(),
-    summaryKo: z.string().optional(),
     url: z.url().optional(),
     visible: z.boolean().default(true),
   }),
