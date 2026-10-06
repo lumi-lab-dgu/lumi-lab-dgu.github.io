@@ -109,7 +109,7 @@ const allLinks = [...profileLinks, ...extraLinks];
       <p class="person__affiliation">{affiliation}</p>
     </header>
 
-    <p class="person__bio">{bioShort}</p>
+    {bioShort && <p class="person__bio">{bioShort}</p>}
 
     {bioLongKo ? <p class="person__long-bio">{bioLongKo}</p> : <slot />}
 

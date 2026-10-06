@@ -263,7 +263,7 @@ nameKo: 홍길동
 role: M.S. Student
 lead: false
 affiliation: Department of Computer Science and Artificial Intelligence, Dongguk University
-bioShort: >-
+bioShort: >-                   # optional; omit to show only the keyword interests
   Two or three sentences.
 interests:
   - LLM evaluation

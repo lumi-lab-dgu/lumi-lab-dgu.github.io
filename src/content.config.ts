@@ -55,7 +55,8 @@ const people = defineCollection({
     lead: z.boolean().default(false),
     affiliation: z.string(),
     affiliationKo: z.string().optional(),
-    bioShort: z.string(),
+    /** Short biography. Optional: members with keyword interests only leave it out. */
+    bioShort: z.string().optional(),
     /** Korean biography. Falls back to the English one when absent. */
     bioShortKo: z.string().optional(),
     /** Korean equivalent of the Markdown body. */
