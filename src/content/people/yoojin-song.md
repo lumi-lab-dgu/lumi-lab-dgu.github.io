@@ -19,6 +19,6 @@ interests:
 email: songyujin625@gmail.com
 github: https://github.com/yoojinsong-cs
 photo: yoojin-song.jpg
-order: 40
+order: 10
 visible: true
 ---

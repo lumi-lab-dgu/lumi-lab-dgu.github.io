@@ -22,6 +22,6 @@ email: mjryu00211@gmail.com
 github: https://github.com/minij02
 linkedin: https://www.linkedin.com/in/%EB%AF%BC%EC%A3%BC-%EB%A5%98-b46203317/
 photo: minju-ryu.jpg
-order: 10
+order: 30
 visible: true
 ---

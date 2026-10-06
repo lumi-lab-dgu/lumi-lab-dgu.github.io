@@ -19,6 +19,6 @@ interests:
   - Agent Reliability
 email: lani5700@naver.com
 photo: hyunwoo-cho.jpg
-order: 30
+order: 40
 visible: true
 ---
